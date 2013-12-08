@@ -39,6 +39,5 @@ public class ClientBase {
 	public Map<String, Client> getClientTable(){
 		return clientTable;	
 	} 
-	
-	
+		
 }
