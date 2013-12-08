@@ -44,7 +44,7 @@ public class ClientAccountServlet extends HttpServlet{
 			printErrorPage(resp);
 		}else if((client != null)&&(!password.equals(client.getPassword()))){
 			printErrorPage(resp);
-		}else if((client != null)&&(password.equals(client.getPassword()))){
+		}else if((client != null)&&(password.equals(client.getPassword()))){	
 			HttpSession session = req.getSession(true);
 			session.setAttribute("client",client);
 			printClientPage(req,resp);

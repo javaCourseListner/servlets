@@ -1,27 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <clientBase>
-	<client>
-	<login>Max</login>
-	<password>xxx</password>
-		<car>
-			<model>dodge</model>
-			<color>black</color>
-			<options>cond</options>
-			<options>telephone</options>
-		</car>
-		  <car>
-            <model>fer</model>
-            <color>redlor</color>
-            <options>cond</options>          
+    <client>
+         <login>Jim</login>
+         <password>stranger</password>
+        <car>
+            <model>storm</model>
+            <color>black</color>
         </car>
-	</client>	
-	<client>
-    <login>Edd</login>
-    <password>xxx</password>
-          <car>
-            <model>fer</model>
-            <color>redlor</color>
-            <options>cond</options>          
-        </car>
-    </client>
+    </client>   
+    <client>
+        <login>Alex</login>
+        <password>world</password>
+            <car>
+                     <model>Bucefal</model>
+                 <color>black</color>
+                 <options>hydroamplifier</options>  
+                 <options>transmission</options> 
+           </car>
+        </client>
+        <client>
+        <login>Bob</login>
+        <password>americanDream</password>
+            <car>
+                     <model>fordFocus</model>
+                 <color>blue</color>
+                 <options>hydroamplifier</options>  
+                 <options>conditioner</options> 
+             <options>transmission</options> 
+            
+           </car>
+           <car>
+                     <model>chevrolet</model>
+                 <color>blue</color>
+                 <options>hydroamplifier</options>  
+                 <options>conditioner</options> 
+             <options>transmission</options> 
+            
+           </car>
+        </client>
 </clientBase>

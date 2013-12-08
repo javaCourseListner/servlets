@@ -20,9 +20,9 @@ public class ClientBase {
 		
 	private Map<String, Client> clientTable = null;
 			
-	synchronized  public void initClientTable(){	
-		if(clientTable == null){
-			 clientTable = new Hashtable<String, Client>();
+	synchronized  public void initClientTable(){					  
+		if(clientTable == null){									// Method must be called after 
+			 clientTable = new Hashtable<String, Client>();			// unmarshalling to initialize map.
 			for(Client element : clientList){
 				clientTable.put(element.getLogin(), element);		
 			}	
@@ -30,9 +30,9 @@ public class ClientBase {
 	}
 		
 	synchronized public void setClientTableToBase(){			
-		clientList = new LinkedList<Client>();
-		for(Entry<String, Client> entry : clientTable.entrySet()){
-			clientList.add(entry.getValue()) ;
+		clientList = new LinkedList<Client>();							// Method must be called before 			
+		for(Entry<String, Client> entry : clientTable.entrySet()){		// marshalling to set data  to the list.
+			clientList.add(entry.getValue()) ;							
 		}	
 	}	
 	

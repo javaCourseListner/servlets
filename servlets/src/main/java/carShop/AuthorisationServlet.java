@@ -114,14 +114,11 @@ public class AuthorisationServlet extends HttpServlet{
 			if (is != null) is.close();
 		}catch (IOException e){/*NOP*/}	
 	}	
-	
-	
+		
 	private void closeQuietly(OutputStream os){
 		try {
 			if (os != null) os.close();
 		}catch (IOException e){/*NOP*/}	
 	}
-
-
 
 }
