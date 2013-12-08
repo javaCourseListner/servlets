@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<clientBase>
+	<client>
+	<login>Max</login>
+	<password>xxx</password>
+		<car>
+			<model>dodge</model>
+			<color>black</color>
+			<options>cond</options>
+			<options>telephone</options>
+		</car>
+		  <car>
+            <model>fer</model>
+            <color>redlor</color>
+            <options>cond</options>          
+        </car>
+	</client>	
+	<client>
+    <login>Edd</login>
+    <password>xxx</password>
+          <car>
+            <model>fer</model>
+            <color>redlor</color>
+            <options>cond</options>          
+        </car>
+    </client>
+</clientBase>
