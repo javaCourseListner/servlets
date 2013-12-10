@@ -29,7 +29,7 @@ public class AuthorizationServlet extends HttpServlet{
 			clientAuthorisation(req, resp);
 		}else{
 			orderRegistration(req);
-			req.getRequestDispatcher("printInformation").forward(req, resp);		
+			req.getRequestDispatcher("/printInformation").forward(req, resp);		
 		}
 	}
 
@@ -58,7 +58,7 @@ public class AuthorizationServlet extends HttpServlet{
 			clientTable.put(login, newClient);
 			HttpSession session = req.getSession(true);
 			session.setAttribute("client", newClient);
-			req.getRequestDispatcher("printInformation").forward(req, resp);
+			req.getRequestDispatcher("/printInformation").forward(req, resp);
 		}
 	}
 		
