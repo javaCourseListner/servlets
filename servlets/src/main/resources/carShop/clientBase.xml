@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <clientBase>
     <client>
+         <login>Joker</login>
+         <password>ada2fddd97ece54129fedd809df7158e</password>
+    </client>      
+    <client>
          <login>Jim</login>
-         <password>stranger</password>
+         <password>7fbf8a8b90bcbb2ba650cc8b714b739</password>
         <car>
             <model>storm</model>
             <color>black</color>
@@ -10,7 +14,7 @@
     </client>   
     <client>
         <login>Alex</login>
-        <password>world</password>
+        <password>7d793037a076186574b282f2f435e7</password>
             <car>
                      <model>Bucefal</model>
                  <color>black</color>
@@ -20,7 +24,7 @@
         </client>
         <client>
         <login>Bob</login>
-        <password>americanDream</password>
+        <password>4ce68e63fa75bf61294475bb456457e2</password>
             <car>
                      <model>fordFocus</model>
                  <color>blue</color>

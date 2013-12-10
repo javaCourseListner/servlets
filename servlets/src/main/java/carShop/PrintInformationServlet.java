@@ -1,84 +1,47 @@
 package carShop;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.List;
-import java.util.Map;
-
+import java.net.URISyntaxException;
+import java.net.URL;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import carShop.entities.Car;
 import carShop.entities.Client;
 import carShop.entities.ClientBase;
 
-
-public class ClientAccountServlet extends HttpServlet{
+public class PrintInformationServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {		
-		if(req.getSession(false) == null){
-			clientAuthorisation(req, resp);
-		}else{
-			orderRegistration(req);
-			printClientPage(req, resp);			
-		}
-	}
-
-	private void clientAuthorisation(HttpServletRequest req, HttpServletResponse resp) {
-		String login = req.getParameter("login");
-		String password =req.getParameter("password");
-		
-		ClientBase clientBase = (ClientBase) getServletContext().getAttribute("clientBase");	
-		Map<String, Client> clientTable = clientBase.getClientTable();		
-		Client client = clientTable.get(login);
-		
-		if(login == null){
-			printErrorPage(resp);
-		}else if(password == null){
-			printErrorPage(resp);
-		}else if((client != null)&&(!password.equals(client.getPassword()))){
-			printErrorPage(resp);
-		}else if((client != null)&&(password.equals(client.getPassword()))){	
-			HttpSession session = req.getSession(true);
-			session.setAttribute("client",client);
-			printClientPage(req,resp);
-		}else if(client == null){
-			Client newClient = new Client();
-			newClient.setLogin(login);
-			newClient.setPassword(password);
-			clientTable.put(login, newClient);
-			HttpSession session = req.getSession(true);
-			session.setAttribute("client", newClient);
-			printClientPage(req,resp);
-		}
-	}
-	
-	private void printClientPage(HttpServletRequest req, HttpServletResponse resp) {	
+	protected void doPost (HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {		
 		Client client =	(Client) req.getSession().getAttribute("client");
 		PrintWriter out = null;		
-		try {
-			out = resp.getWriter();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}			
+		out = resp.getWriter();			
 		out.print("<html> <body>"); 		
 		out.print("<title>Client page</title>"); 	
 		out.print("<h3>you are wellcome)  " + client.getLogin()+"</h3>");	
-		out.print("<form action=\"servlets\" method=\"get\">");
+		out.print("<form action=\"logout\" method=\"get\">");
 		out.print("<input type=\"submit\" value=\"logout\"></form>");
 		printClientInformation(out, client);
 		printInputForm(out);		 
 		out.print("</body></html>");  
 		out.print("</body></html> "); 
-		out.close();
+		out.close();	
 	}
-		
+			
 	private void printClientInformation(PrintWriter out, Client client){					
 		if(client.car.size()>0){
 			out.print("<h3>Your orders </h3>");
@@ -103,9 +66,9 @@ public class ClientAccountServlet extends HttpServlet{
 		}
 	}
 	
-	private void printInputForm(PrintWriter out){
+	private void printInputForm(PrintWriter out){		
 		out.print("<h3>Complete the form </h3>");
-		out.print("<form action = \"clientAccount\" method=\"POST\">");
+		out.print("<form action = \"myAccount\" method=\"POST\">");
 		out.print("<br> <h4>Input car model:</h4> ");
 		out.print("<br> <input type = \"text\" name = \"model\" />");
 		out.print("<br> <h4>Choose color:</h4> ");
@@ -120,31 +83,69 @@ public class ClientAccountServlet extends HttpServlet{
 		out.print("<br><input type = \"submit\" value=\"Submit\"/>");
 		out.print("</form>");
 	}
-	
-	private void orderRegistration(HttpServletRequest req){			 																				
-		String model = req.getParameter("model");									
-		if(model != null){															// According the logic order is valid if
-			String color = req.getParameter("color");								// field "model" is not null.		
-			String[] options = req.getParameterValues("options");			
-			Car car = new Car(model,color,options);	
-			Client client =	(Client) req.getSession().getAttribute("client");	
-			List<Car> cars = client.car;
-			cars.add(car)	;	
-		}
+		
+	@Override
+	public void init() throws ServletException {									
+		ClientBase clientBase = (ClientBase) getServletContext().getAttribute("clientBase");		
+		if (clientBase == null){
+			clientBase = getBase();
+			clientBase.initClientTable();
+			getServletContext().setAttribute("clientBase", clientBase);
+	 	}
 	}
 	
-	
-	private void printErrorPage(HttpServletResponse resp) {
-		PrintWriter out = null;		
+	@Override
+	public void destroy() {		
+		setBase();
+	}
+			
+	private void setBase() {
+		OutputStream os = null;
 		try {
-			out = resp.getWriter();
-		} catch (IOException e) {
+		JAXBContext jc =JAXBContext.newInstance(ClientBase.class);
+		Marshaller m=jc.createMarshaller();		
+		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);		
+		URL url =  AuthorizationServlet.class.getResource("clientBase.xml"); 
+		os = new FileOutputStream(new File(url.toURI()));
+		ClientBase clientBase = (ClientBase) getServletContext().getAttribute("clientBase");	
+		clientBase.setClientTableToBase();
+		m.marshal(clientBase, os);
+		} catch (JAXBException e) {
 			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		} finally {		
+			closeQuietly(os);		
 		}
-		out.print("<html><body>"); 
-		out.print("<h2>invalid password<h2>"); 
-		out.print("</body></html>"); 		
-		out.close();
+	}
+
+	private ClientBase getBase(){				
+		InputStream is = null;	
+		ClientBase clientBase = null;
+		try {		
+			is = AuthorizationServlet.class.getResourceAsStream("clientBase.xml");	
+			JAXBContext jc = JAXBContext.newInstance(ClientBase.class);
+			Unmarshaller unmarshaller = jc.createUnmarshaller();		
+			clientBase =(ClientBase)unmarshaller.unmarshal(is);
+		} catch (JAXBException e) {		
+			e.printStackTrace();
+		}finally{			
+			closeQuietly(is);	
+		}
+		return clientBase;	
 	}
 	
+	private void closeQuietly(InputStream is){
+		try {
+			if (is != null) is.close();
+		}catch (IOException e){/*NOP*/}	
+	}	
+		
+	private void closeQuietly(OutputStream os){
+		try {
+			if (os != null) os.close();
+		}catch (IOException e){/*NOP*/}	
+	}	
 }
