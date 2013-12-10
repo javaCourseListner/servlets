@@ -7,29 +7,39 @@
   <display-name>Archetype Created Web Application</display-name>
   
    <servlet>
-    <servlet-name>AuthorisationServlet</servlet-name>
-    <servlet-class>carShop.AuthorisationServlet</servlet-class>
+    <servlet-name>authorizationServlet</servlet-name>
+    <servlet-class>carShop.AuthorizationServlet</servlet-class>
   </servlet>
   
    <servlet>
-    <servlet-name>ClientAccount</servlet-name>
-    <servlet-class>carShop.ClientAccountServlet</servlet-class>
+    <servlet-name>printInformation</servlet-name>
+    <servlet-class>carShop.PrintInformationServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
   </servlet>
   
+   <servlet>
+    <servlet-name>logout</servlet-name>
+    <servlet-class>carShop.LogoutServlet</servlet-class>
+  </servlet>
   
   <servlet-mapping>
-    <servlet-name>AuthorisationServlet</servlet-name>
-    <url-pattern>/</url-pattern>
+    <servlet-name>logout</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>authorizationServlet</servlet-name>
+    <url-pattern>/myAccount</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
-    <servlet-name>ClientAccount</servlet-name>
-    <url-pattern>/clientAccount</url-pattern>
+    <servlet-name>printInformation</servlet-name>
+    <url-pattern>/printInformation</url-pattern>
   </servlet-mapping>
   
   
   <welcome-file-list>  
-    <welcome-file>/</welcome-file>  
+    <welcome-file>index.html</welcome-file>  
   </welcome-file-list> 
 
 </web-app>
