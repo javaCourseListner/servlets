@@ -81,5 +81,4 @@ public class AuthorizationServlet extends HttpServlet{
 	    }	        
 	    return hexString.toString();
 	}
-
 }
