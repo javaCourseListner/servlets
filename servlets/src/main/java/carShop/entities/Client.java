@@ -2,24 +2,35 @@ package carShop.entities;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlElement;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 @XmlType
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public class Client {
 	
 	private String login;
 	
 	private String password;
 	
-	@XmlElement
 	public List<Car> car = new ArrayList<Car>();
 	
 	
-	public String getLogin() {
+		public void setCar(List<Car> car) {
+			this.car = car;
+		} 
+	
+		public List<Car> getCar() {
+			return car;
+		} 
+		
+		public String getLogin() {
 		return login;
 	}
 	
@@ -35,7 +46,10 @@ public class Client {
 		return password;
 	}	
 
-	
+	@Override
+	public String toString() {
+		return login.toString();
+	}
 	
 	
 }

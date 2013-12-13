@@ -6,9 +6,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,71 +18,38 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+
 import carShop.entities.Car;
 import carShop.entities.Client;
 import carShop.entities.ClientBase;
 
-public class PrintInformationServlet extends HttpServlet{
+public class PersonalPageServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 
+	
 	@Override
 	protected void doPost (HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {		
-		Client client =	(Client) req.getSession().getAttribute("client");
-		PrintWriter out = null;		
-		out = resp.getWriter();			
-		out.print("<html> <body>"); 		
-		out.print("<title>Client page</title>"); 	
-		out.print("<h3>you are wellcome)  " + client.getLogin()+"</h3>");	
-		out.print("<form action=\"logout\" method=\"get\">");
-		out.print("<input type=\"submit\" value=\"logout\"></form>");
-		printClientInformation(out, client);
-		printInputForm(out);		 
-		out.print("</body></html>");  
-		out.print("</body></html> "); 
-		out.close();	
-	}
-			
-	private void printClientInformation(PrintWriter out, Client client){					
-		if(client.car.size()>0){
-			out.print("<h3>Your orders </h3>");
-			String toPrint = "";
-			for(Car car: client.car){
-				out.print("<br><h4>Car model:</h4>");
-				if((toPrint = car.getModel())!= null) out.print(toPrint);			
-				
-				if((toPrint = car.getColor())!= null){ 
-					out.print("<br><h4>Color:</h4>");
-					out.print(toPrint);	
-				}
-				
-				if(car.getOptions().size() > 0){
-					out.print("<br><h4>Options:</h4>");
-					for(String option : car.getOptions()){
-						 out.print(option+" ");
-					}		
-				}
-				out.print("<br>***");
-			}
-		}
+		orderRegistration(req);
+		req.getRequestDispatcher("clientPersonalPage.jsp").forward(req, resp);		
 	}
 	
-	private void printInputForm(PrintWriter out){		
-		out.print("<h3>Complete the form </h3>");
-		out.print("<form action = \"myAccount\" method=\"POST\">");
-		out.print("<br> <h4>Input car model:</h4> ");
-		out.print("<br> <input type = \"text\" name = \"model\" />");
-		out.print("<br> <h4>Choose color:</h4> ");
-		out.print("<br> <label> red <input type = \"radio\" name = \"color\" value= \"red\" /></label>");
-		out.print(" <label> blue <input type = \"radio\" name = \"color\" value= \"red\" /></label>");
-		out.print(" <label> green <input type = \"radio\" name = \"color\" value= \"red\" /></label>");
-		out.print("<label> black <input type = \"radio\" name = \"color\" value= \"red\" /></label>");
-		out.print("<br> <h4>Select options:</h4>");
-		out.print("<br> <label> conditioner <input type = \"checkbox\" name = \"options\" value= \"conditioner\"/></label>");
-		out.print(" <label> hydroamplifier <input type = \"checkbox\" name = \"options\" value= \"hydroamplifier\"/></label>");
-		out.print(" <label> automatic transmission <input type = \"checkbox\" name = \"options\" value= \"automatic transmission\"/></label>");	
-		out.print("<br><input type = \"submit\" value=\"Submit\"/>");
-		out.print("</form>");
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
+		req.getRequestDispatcher("clientPersonalPage.jsp").forward(req, resp);
+	}
+			
+	private void orderRegistration(HttpServletRequest req){			 																				
+		String model = req.getParameter("model");									
+		if((model != null)&&(!model.equals(""))){									// According the logic order is valid if
+			String color = req.getParameter("color");								// field "model" is not null.		
+			String[] options = req.getParameterValues("options");			
+			Car car = new Car(model,color,options);	
+			Client client =	(Client) req.getSession().getAttribute("client");	
+			List<Car> cars = client.car;
+			cars.add(car);	
+		}
 	}
 		
 	@Override
