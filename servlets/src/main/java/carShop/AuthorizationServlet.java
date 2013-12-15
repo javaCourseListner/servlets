@@ -3,14 +3,15 @@ package carShop;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import carShop.entities.Client;
-import carShop.entities.ClientBase;
+import carShop.entities.EntitiesManeger;
 
 
 public class AuthorizationServlet extends HttpServlet{
@@ -36,9 +37,8 @@ public class AuthorizationServlet extends HttpServlet{
 		String login = req.getParameter("login");
 		String password = getHash(req.getParameter("password"));
 		
-		ClientBase clientBase = (ClientBase) getServletContext().getAttribute("clientBase");	
-		Map<String, Client> clientTable = clientBase.getClientTable();		
-		Client client = clientTable.get(login);
+		EntitiesManeger  entitiesManeger  = (EntitiesManeger) getServletContext().getAttribute("entitiesManeger ");			
+		Client client = entitiesManeger .getClientById(login);
 		
 		if(login == null){
 			req.setAttribute("errorMessage" , "input login");
@@ -56,8 +56,8 @@ public class AuthorizationServlet extends HttpServlet{
 		}else if(client == null){
 			Client newClient = new Client();
 			newClient.setLogin(login);
-			newClient.setPassword(password);
-			clientTable.put(login, newClient);
+			newClient.setPassword(password);			
+			entitiesManeger .setClient(newClient);
 			HttpSession session = req.getSession(true);
 			session.setAttribute("client", newClient);
 			req.getRequestDispatcher("clientWelcomePage.jsp").forward(req, resp);

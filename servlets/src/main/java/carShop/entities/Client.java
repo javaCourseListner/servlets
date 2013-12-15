@@ -1,24 +1,22 @@
 package carShop.entities;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.persistence.*;
 
 
-@XmlType
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.PROPERTY)
+@Entity
 public class Client {
 	
+	@Id
 	private String login;
 	
 	private String password;
 	
+	 
+	@OneToMany(mappedBy = "client")
 	public List<Car> car = new ArrayList<Car>();
 	
 	
@@ -30,7 +28,9 @@ public class Client {
 			return car;
 		} 
 		
-		public String getLogin() {
+	public Client(){}
+	
+	public String getLogin() {
 		return login;
 	}
 	
@@ -50,6 +50,7 @@ public class Client {
 	public String toString() {
 		return login.toString();
 	}
+
 	
 	
 }

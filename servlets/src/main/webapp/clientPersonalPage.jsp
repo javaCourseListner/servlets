@@ -13,9 +13,9 @@
 	        <br>Your car model: ${car.model} 
 	       <br>Color: ${car.color}  
 	        <br>Options:  
-	             <c:forEach var="option" items="${car.options}">                        
-	                 ${option}                      
-	             </c:forEach>
+                 <c:forEach var="option" items="${car.options}">                        
+                     ${option.name}                      
+                 </c:forEach>
 	        <br>
         </c:forEach>
         <br>             

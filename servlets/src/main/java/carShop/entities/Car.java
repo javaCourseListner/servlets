@@ -1,34 +1,42 @@
 package carShop.entities;
+//import java.util.ArrayList;
+//import java.util.List;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.persistence.*;
 
-
-
-@XmlType
-@XmlRootElement
+@Entity
 public class Car {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	
+	private long Id;
 	
 	private String model; 
 	
 	private String color; 
 	
-	private List<String> options = new ArrayList<String>();
-			
-	public Car(){}
+	@ManyToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+	@JoinColumn(name= "login")
+	private Client client;
 	
-	public Car(String model,String color,String[] options){
-		this.model = model;
-		this.color = color;		
-		if(options != null){
-			for(String str : options){
-			this.options.add(str);
-			}
-		}		
+	@ManyToMany(mappedBy = "car",cascade=CascadeType.ALL)
+	private List<Options> option = new ArrayList<Options>();
+	
+	public Client getClient() {
+		return client;
 	}
-		
+
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	Car(){}
+	
+	
 	public String getModel() {
 		return model;
 	}
@@ -45,12 +53,41 @@ public class Car {
 		return color;
 	}	
 	
-	public void setOptions(List<String> options) {
-		this.options = options;
+	public void setId(long id) {
+		this.Id = id;
 	}
 	
-	public List<String> getOptions() {
-		return options;
+	public long getId() {
+		return Id;
+	}
+	public String getSringForPrint(){
+		return " Id:"+ Id+" model:="+model+" color:"+color;		
+	}
+	
+
+
+			
+
+	public Car(String model,String color, String[] options,Client client){
+		this.model = model;
+		this.color = color;		
+		this.client = client;	
+		if(options != null){
+			for(String str : options){
+			Options opt = new Options(str,this);
+				this.option.add(opt);
+			}
+		}		
+	}
+		
+
+	
+	public void setOptions(List<Options> options) {
+		this.option = options;
+	}
+	
+	public List<Options> getOptions() {
+		return option;
 	}
 	
 }
