@@ -3,13 +3,11 @@ package carShop;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import carShop.entities.Client;
 import carShop.entities.EntitiesManeger;
 
@@ -17,14 +15,13 @@ import carShop.entities.EntitiesManeger;
 public class AuthorizationServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
-	
-	
+		
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
 		if(req.getSession(false) != null){
 			req.getRequestDispatcher("clientWelcomePage.jsp").forward(req, resp);				
 		}else{
-			req.getRequestDispatcher("guestWelcomePage.jsp").forward(req, resp);	
+			req.getRequestDispatcher("guestWelcomePage.html").forward(req, resp);
 		}
 	}	
 	
@@ -37,18 +34,13 @@ public class AuthorizationServlet extends HttpServlet{
 		String login = req.getParameter("login");
 		String password = getHash(req.getParameter("password"));
 		
-		EntitiesManeger  entitiesManeger  = (EntitiesManeger) getServletContext().getAttribute("entitiesManeger ");			
-		Client client = entitiesManeger .getClientById(login);
+		EntitiesManeger entitiesManeger = (EntitiesManeger) getServletContext().getAttribute("entitiesManeger");			
+		Client client = entitiesManeger.getClientById(login);
 		
-		if(login == null){
-			req.setAttribute("errorMessage" , "input login");
-			req.getRequestDispatcher("errorPage.jsp").forward(req, resp);
-		}else if(password == null){
-			req.setAttribute("errorMessage" , "input password");
-			req.getRequestDispatcher("errorPage.jsp").forward(req, resp);
-		}else if((client != null)&&(!password.equals(client.getPassword()))){
-			req.setAttribute("errorMessage" , "invalid password");
-			req.getRequestDispatcher("errorPage.jsp").forward(req, resp);
+		if((login == null)||(password == null)){			
+			req.getRequestDispatcher("errorPage.html").forward(req, resp);
+		}else if((client != null)&&(!password.equals(client.getPassword()))){			
+			req.getRequestDispatcher("errorPage.html").forward(req, resp);
 		}else if((client != null)&&(password.equals(client.getPassword()))){				
 			HttpSession session = req.getSession(true);
 			session.setAttribute("client",client);

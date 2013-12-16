@@ -1,84 +1,43 @@
 package carShop.entities;
 
-import java.util.List;
+import javax.persistence.Embeddable;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-//import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-
-@Entity
+@Embeddable
 public class Options {
-		
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long Id;
-			
-	
-	@ManyToMany(fetch = FetchType.LAZY,cascade=CascadeType.ALL,targetEntity=Car.class)
-	//@JoinColumn(name="carId")
-		@JoinTable(
-		name="car_options",		     
-		joinColumns={@JoinColumn(name="car_Id", referencedColumnName="carId")},
-		inverseJoinColumns={@JoinColumn(name="option_id", referencedColumnName="Id")})
-	private List<Car> car ;
+				
+	private boolean conditioner;
 
+	private boolean hydroamplifier;
+
+	private boolean automaticTransmission;
+		
+	public Options() {/*NOP*/}
 	
-	private String name;
-	
-	public Options() {}
-	
-	public Options(String name, Car car) {
-		this.car = car;
-		this.name = name;
+	public boolean isConditioner() {
+		return conditioner;
 	}
-	
+	public void setConditioner(boolean conditioner) {
+		this.conditioner = conditioner;
+	}
+	public boolean isHydroamplifier() {
+		return hydroamplifier;
+	}
+	public void setHydroamplifier(boolean hydroamplifier) {
+		this.hydroamplifier = hydroamplifier;
+	}
+	public boolean isAutomaticTransmission() {
+		return automaticTransmission;
+	}
+	public void setAutomaticTransmission(boolean automaticTransmission) {
+		this.automaticTransmission = automaticTransmission;
+	}
+
 	@Override
 	public String toString() {
-		return name;
-	}
-
-
-
-	public long getId() {
-		return Id;
-	}
-
-
-
-	public void setId(long id) {
-		Id = id;
-	}
-
-
-
-	public String getName() {
-		return name;
-	}
-
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
-
-	public Car getCar() {
-		return car;
-	}
-
-
-
-	public void setCar(Car car) {
-		this.car = car;
+		String result = "";
+		if(isConditioner())result+="Conditioner ";
+		if(isHydroamplifier())result+="Hydroamplifier ";
+		if(isAutomaticTransmission())result+="Automatic transmission ";
+		return result;
 	}
 }

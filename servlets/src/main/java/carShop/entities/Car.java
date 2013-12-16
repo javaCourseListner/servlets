@@ -1,9 +1,4 @@
 package carShop.entities;
-//import java.util.ArrayList;
-//import java.util.List;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.*;
 
@@ -18,24 +13,29 @@ public class Car {
 	
 	private String color; 
 	
+	@Embedded
+	private Options options ;
+	
 	@ManyToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinColumn(name= "login")
 	private Client client;
+			
+	public Car(String model, String color, Options options, Client client) { 
+		this.model=model;
+		this.color=color;
+		this.options=options;
+		this.client=client;
+	}
 	
-	@ManyToMany(mappedBy = "car",cascade=CascadeType.ALL)
-	private List<Options> option = new ArrayList<Options>();
+	public Car() { }
 	
 	public Client getClient() {
 		return client;
 	}
 
-
 	public void setClient(Client client) {
 		this.client = client;
 	}
-
-	Car(){}
-	
 	
 	public String getModel() {
 		return model;
@@ -60,34 +60,13 @@ public class Car {
 	public long getId() {
 		return Id;
 	}
-	public String getSringForPrint(){
-		return " Id:"+ Id+" model:="+model+" color:"+color;		
-	}
-	
-
-
 			
-
-	public Car(String model,String color, String[] options,Client client){
-		this.model = model;
-		this.color = color;		
-		this.client = client;	
-		if(options != null){
-			for(String str : options){
-			Options opt = new Options(str,this);
-				this.option.add(opt);
-			}
-		}		
-	}
-		
-
+	public void setOptions(Options options) {
+		this.options = options;
+	}	
 	
-	public void setOptions(List<Options> options) {
-		this.option = options;
-	}
-	
-	public List<Options> getOptions() {
-		return option;
+	public Options getOptions() {
+		return options;
 	}
 	
 }

@@ -7,18 +7,19 @@
 <title>Personal page</title>
 </head>
 	<body>      
+       
+       <form action = "welcomePage" method="GET" >
+       To previous page: <input type = "submit" value="back" />    
+       </form>             
        <br> <b>ORDERS:</b>
-       <br>
+       <br>              
         <c:forEach var="car" items="${client.car}">        
-	        <br>Your car model: ${car.model} 
-	       <br>Color: ${car.color}  
-	        <br>Options:  
-                 <c:forEach var="option" items="${car.options}">                        
-                     ${option.name}                      
-                 </c:forEach>
-	        <br>
-        </c:forEach>
-        <br>             
+		    <br>Your car model: ${car.model} 
+		    <br>Color: ${car.color}  
+		    <br>Options: ${car.options}                      
+	    <br>        
+        </c:forEach>               
+        <br>                     
         <form action = "personalPage" method="POST">	   
 	        <b>COMPLETE THE FORM:</b>
 	        <br> 
@@ -30,9 +31,9 @@
 	        <br><label><input type = "radio" name = "color" value= "green" />green</label>
 	        <br><label><input type = "radio" name = "color" value= "black" />black</label>
 	        <br><b>Select options:</b>
-	        <br><label><input type = "checkbox" name = "options" value= "conditioner"/> conditioner </label>
-	        <br><label><input type = "checkbox" name = "options" value= "hydroamplifier"/> hydroamplifier </label>
-	        <br><label><input type = "checkbox" name = "options" value= "automatic transmission"/> automatic transmission </label>
+	        <br><label><input type = "checkbox" name = "conditioner" value= "true"/> conditioner </label>
+	        <br><label><input type = "checkbox" name = "hydroamplifier" value= "true"/> hydroamplifier </label>
+	        <br><label><input type = "checkbox" name = "automaticTransmission" value= "true"/> automatic transmission </label>
 	        <br><input type="reset" name="reset" value="Clean">  <input type = "submit" value="Submit"/>       
         </form>
 	</body>
