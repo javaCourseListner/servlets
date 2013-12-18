@@ -13,7 +13,7 @@
         <br>Options: ${car.options}                      
         <br>        
          <form action = "carManeger" method="POST" >
-         To create order: <button name="order" value="${car.id}" type="submit">buy</button>       
+         To create order: <button name="order" value="${car.carId}" type="submit">buy</button>       
         </form>  
         <form action = "carManeger" method="GET" >
          To previous page: <button type="submit">back</button>       

@@ -12,7 +12,13 @@ public class Options {
 	private boolean automaticTransmission;
 		
 	public Options() {/*NOP*/}
-	
+		
+	public Options(boolean conditioner, boolean hydroamplifier, boolean automaticTransmission) {
+		this.conditioner = conditioner;
+		this.hydroamplifier = hydroamplifier;
+		this.automaticTransmission = automaticTransmission;
+	}
+
 	public boolean isConditioner() {
 		return conditioner;
 	}

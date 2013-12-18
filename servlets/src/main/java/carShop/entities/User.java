@@ -16,20 +16,25 @@ public class User {
 	private String password;
 	
 	 
-	@OneToMany(mappedBy = "user")
-	public List<Car> car = new ArrayList<Car>();
-	
-	
-		public void setCar(List<Car> car) {
-			this.car = car;
-		} 
-	
-		public List<Car> getCar() {
-			return car;
-		} 
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	public List<UserOrder> userOrder = new ArrayList<UserOrder>();
 		
-	public User(){}
+	public void setUserOrder(List<UserOrder> userOrder) {
+		this.userOrder = userOrder;
+	} 
 	
+	public List<UserOrder> getUserOrder() {
+		return userOrder;
+	} 
+			
+	public User(){}
+		
+	public User(String login, String password, List<UserOrder> userOrder) {
+		this.login = login;
+		this.password = password;
+		this.userOrder = userOrder;
+	}
+
 	public String getLogin() {
 		return login;
 	}

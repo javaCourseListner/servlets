@@ -8,6 +8,9 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import carShop.entities.Car;
+import carShop.entities.Options;
+import carShop.entities.User;
+import carShop.entities.UserOrder;
 
 
 public class CarDao {
@@ -23,22 +26,55 @@ public class CarDao {
 	
 	
 	
-//	public static void main(String[] args) {			
+	public static void main(String[] args) {			
+		
 //		List<Car> listItem = new CarDao().getCars();
 //		if(listItem != null){
 //			for(Car i:listItem){
 //				System.out.println(i.toString());
 //			}
 //		}		
-//	}
+	
+	CarDao cd =new CarDao();
+	cd.setCar(new Car("ostin","red",new Options(true,true,false)));	
+	cd.setCar(new Car("BMW","blue",new Options(false,true,false)));
+	cd.setCar(new Car("Merss","black",new Options(true,true,true)));
+	
+	User u = new User();
+	u.setLogin("adik");
+	u.setPassword("xxx");
+	
+//	cd.setUser();
+	}
 	
 	
+	public User getUserById(String login){					
+		EntityManager em = factory.createEntityManager();
+		return em.find(User.class, login);
+	}
 	
 	
+	public void setUser(User user){		
+		EntityManager em = factory.createEntityManager();
+		em.getTransaction().begin();
+		em.persist(user);
+		em.getTransaction().commit();
+	}
 	
-	
-	
+	public void setCar(Car car){		
+		EntityManager em = factory.createEntityManager();
+		em.getTransaction().begin();
+		em.persist(car);
+		em.getTransaction().commit();
+	}
 
+	public void setUserOrder(UserOrder userOrder){		
+		EntityManager em = factory.createEntityManager();
+		em.getTransaction().begin();
+		em.persist(userOrder);
+		em.getTransaction().commit();
+	}
+	
 	
 	public Car getCarById(int id){					
 		EntityManager em = factory.createEntityManager();

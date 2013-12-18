@@ -6,8 +6,9 @@ import javax.persistence.*;
 public class Car {
 
 	@Id
+	@OneToMany
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
-	private int Id;
+	private int carId;
 	
 	private String model; 
 	
@@ -16,26 +17,17 @@ public class Car {
 	@Embedded
 	private Options options ;
 	
-	@ManyToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
-	@JoinColumn(name= "login")
-	private User user;
-			
-	public Car(String model, String color, Options options, User user) { 
+
+
+	public Car(String model, String color, Options options) { 
 		this.model=model;
 		this.color=color;
 		this.options=options;
-		this.user=user;
+
 	}
 	
 	public Car() { }
 	
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
 	
 	public String getModel() {
 		return model;
@@ -53,12 +45,12 @@ public class Car {
 		return color;
 	}	
 	
-	public void setId(int id) {
-		this.Id = id;
+	public void setCarId(int carId) {
+		this.carId = carId;
 	}
 	
-	public long getId() {
-		return Id;
+	public int getCarId() {
+		return carId;
 	}
 			
 	public void setOptions(Options options) {

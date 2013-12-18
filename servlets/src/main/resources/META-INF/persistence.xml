@@ -9,6 +9,7 @@
          <class>carShop.entities.User</class>
          <class>carShop.entities.Car</class>
          <class>carShop.entities.Options</class>         
+         <class>carShop.entities.UserOrder</class>  
          <properties>
               <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />              
               <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/carbase?profileSQL=true" />                           

@@ -14,7 +14,7 @@
             <br>Options: ${car.options}                      
         <br>        
          <form action = "carManeger" method="POST" >
-         Detail Information: <button name="car" value="${car.id}"  type="submit">detail</button>       
+         Detail Information: <button name="car" value="${car.carId}"  type="submit">detail</button>       
         </form>  
         </c:forEach>  
 </body>
