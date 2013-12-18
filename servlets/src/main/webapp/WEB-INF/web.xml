@@ -14,17 +14,33 @@
     <servlet-name>authorizationServlet</servlet-name>
     <servlet-class>carShop.AuthorizationServlet</servlet-class>
   </servlet>
+    
+  <servlet>
+    <servlet-name>CarManegerServlet</servlet-name>
+    <servlet-class>carShop.CarManegerServlet</servlet-class>
+  </servlet>
   
    <servlet>
     <servlet-name>personalPage</servlet-name>
     <servlet-class>carShop.PersonalPageServlet</servlet-class>
     <load-on-startup>0</load-on-startup>
   </servlet>
-  
+
    <servlet>
     <servlet-name>logout</servlet-name>
     <servlet-class>carShop.LogoutServlet</servlet-class>
+    </servlet>
+     
+  <servlet>
+    <servlet-name>adminServlet</servlet-name>
+    <servlet-class>carShop.AdministrationServlet</servlet-class>
   </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>CarManegerServlet</servlet-name>
+    <url-pattern>/carManeger</url-pattern>
+  </servlet-mapping>
+
   
   <servlet-mapping>
     <servlet-name>logout</servlet-name>

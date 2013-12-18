@@ -8,7 +8,7 @@ import javax.persistence.Persistence;
 
 public class EntitiesManeger {		
 	
-	private static final String PERSISTENCE_UNIT_NAME = "CashM";
+	private static final String PERSISTENCE_UNIT_NAME = "mySqlUnit";
 	private static EntityManagerFactory factory;
 	private static EntityManager em;
 	
@@ -17,13 +17,14 @@ public class EntitiesManeger {
 		em = factory.createEntityManager();
 	}
 			
-	public Client getClientById(String login){					
-		return em.find(Client.class, login);
+	public User getUserById(String login){					
+		return em.find(User.class, login);
 	}
 	
-	public void setClient(Client client){		
+	
+	public void setUser(User user){		
 		em.getTransaction().begin();
-		em.persist(client);
+		em.persist(user);
 		em.getTransaction().commit();
 	}
 	

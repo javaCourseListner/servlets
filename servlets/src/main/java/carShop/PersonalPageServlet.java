@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import carShop.entities.Car;
-import carShop.entities.Client;
+import carShop.entities.User;
 import carShop.entities.EntitiesManeger;
 import carShop.entities.Options;
 
@@ -28,16 +28,29 @@ public class PersonalPageServlet extends HttpServlet{
 		req.getRequestDispatcher("clientPersonalPage.jsp").forward(req, resp);
 	}
 			
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	private void orderRegistration(HttpServletRequest req){			 																				
-		Client client = (Client) req.getSession().getAttribute("client");
+		User user = (User) req.getSession().getAttribute("user");
 		EntitiesManeger  entitiesManeger  = (EntitiesManeger) getServletContext().getAttribute("entitiesManeger");
 		String model = req.getParameter("model");									
 		if((model != null)&&(!model.equals(""))){									// According the logic order is valid if
 			String color = req.getParameter("color");								// field "model" is not null.					
 			Options opt = getOptionsFromRequest(req);;									
-			Car car = new Car(model,color,opt,client);	
+			Car car = new Car(model,color,opt,user);	
 			entitiesManeger.setCar(car);
-			client.car.add(car);	
+			user.car.add(car);	
 		}
 	}
 	

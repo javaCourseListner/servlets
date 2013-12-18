@@ -7,7 +7,7 @@ public class Car {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
-	private long Id;
+	private int Id;
 	
 	private String model; 
 	
@@ -18,23 +18,23 @@ public class Car {
 	
 	@ManyToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinColumn(name= "login")
-	private Client client;
+	private User user;
 			
-	public Car(String model, String color, Options options, Client client) { 
+	public Car(String model, String color, Options options, User user) { 
 		this.model=model;
 		this.color=color;
 		this.options=options;
-		this.client=client;
+		this.user=user;
 	}
 	
 	public Car() { }
 	
-	public Client getClient() {
-		return client;
+	public User getUser() {
+		return user;
 	}
 
-	public void setClient(Client client) {
-		this.client = client;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	public String getModel() {
@@ -53,7 +53,7 @@ public class Car {
 		return color;
 	}	
 	
-	public void setId(long id) {
+	public void setId(int id) {
 		this.Id = id;
 	}
 	

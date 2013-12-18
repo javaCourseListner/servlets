@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 
 @Entity
-public class Client {
+public class User {
 	
 	@Id
 	private String login;
@@ -16,7 +16,7 @@ public class Client {
 	private String password;
 	
 	 
-	@OneToMany(mappedBy = "client")
+	@OneToMany(mappedBy = "user")
 	public List<Car> car = new ArrayList<Car>();
 	
 	
@@ -28,7 +28,7 @@ public class Client {
 			return car;
 		} 
 		
-	public Client(){}
+	public User(){}
 	
 	public String getLogin() {
 		return login;

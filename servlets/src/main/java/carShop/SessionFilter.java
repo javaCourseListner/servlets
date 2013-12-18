@@ -36,7 +36,7 @@ public class SessionFilter implements Filter {
         	response.sendRedirect("guestWelcomePage.html");
         	return;    
         }
-              
+        
         chain.doFilter(req, res);        
     }
  

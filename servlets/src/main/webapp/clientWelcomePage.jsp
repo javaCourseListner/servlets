@@ -13,7 +13,9 @@
 		Your personal page here: <input type="submit" value="get it)"></form>
 		<br>
 		<form action="logout" method="GET">
-		To logout click  here: <input type="submit" value="logout"></form>		
+		To logout click  here: <input type="submit" value="logout"></form>	
+		<form action="carManeger" method="GET">
+        To car list click  here: <input type="submit" value="cars"></form>	
 	</body>
 </html>
 

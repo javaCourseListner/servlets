@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import carShop.entities.Client;
+import carShop.entities.User;
 import carShop.entities.EntitiesManeger;
 
 
@@ -35,23 +35,23 @@ public class AuthorizationServlet extends HttpServlet{
 		String password = getHash(req.getParameter("password"));
 		
 		EntitiesManeger entitiesManeger = (EntitiesManeger) getServletContext().getAttribute("entitiesManeger");			
-		Client client = entitiesManeger.getClientById(login);
+		User user = entitiesManeger.getUserById(login);
 		
 		if((login == null)||(password == null)){			
 			req.getRequestDispatcher("errorPage.html").forward(req, resp);
-		}else if((client != null)&&(!password.equals(client.getPassword()))){			
+		}else if((user != null)&&(!password.equals(user.getPassword()))){			
 			req.getRequestDispatcher("errorPage.html").forward(req, resp);
-		}else if((client != null)&&(password.equals(client.getPassword()))){				
+		}else if((user != null)&&(password.equals(user.getPassword()))){				
 			HttpSession session = req.getSession(true);
-			session.setAttribute("client",client);
+			session.setAttribute("user",user);
 			req.getRequestDispatcher("clientWelcomePage.jsp").forward(req, resp);
-		}else if(client == null){
-			Client newClient = new Client();
-			newClient.setLogin(login);
-			newClient.setPassword(password);			
-			entitiesManeger .setClient(newClient);
+		}else if(user == null){
+			User newUser = new User();
+			newUser.setLogin(login);
+			newUser.setPassword(password);			
+			entitiesManeger .setUser(newUser);
 			HttpSession session = req.getSession(true);
-			session.setAttribute("client", newClient);
+			session.setAttribute("user", newUser);
 			req.getRequestDispatcher("clientWelcomePage.jsp").forward(req, resp);
 		}
 	}
