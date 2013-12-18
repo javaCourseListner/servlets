@@ -1,5 +1,6 @@
 package carShop.DAO;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -41,10 +42,16 @@ public class CarDao {
 	cd.setCar(new Car("Merss","black",new Options(true,true,true)));
 	
 	User u = new User();
-	u.setLogin("adik");
+	u.setLogin("adikrr");
 	u.setPassword("xxx");
+	Car c=new Car();
+	c.setCarId(1);
+	u.getUserOrder().add(new UserOrder(c, u, new Date()));
+	cd.setUser(u);
 	
-//	cd.setUser();
+	//Car c=new Car();
+	//c.setCarId(1);
+	cd.setUserOrder(new UserOrder(c, u, new Date()));
 	}
 	
 	
@@ -89,8 +96,8 @@ public class CarDao {
 		try {
 			listItem=query.getResultList();
 		}finally{
-			em.close();														// 
-		}																	//															//
+			em.close();														
+		}																																//
 		return listItem;
 	}
 
