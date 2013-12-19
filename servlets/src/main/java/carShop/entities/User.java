@@ -17,6 +17,8 @@ public class User {
 	
 	private boolean adminRights;
 	 
+	private boolean valid;
+	
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	public List<UserOrder> userOrder = new ArrayList<UserOrder>();
 		
@@ -63,5 +65,13 @@ public class User {
 
 	public void setAdminRights(boolean adminRights) {
 		this.adminRights = adminRights;
+	}
+
+	public boolean isValid() {
+		return valid;
+	}
+
+	public void setValid(boolean valid) {
+		this.valid = valid;
 	}	
 }

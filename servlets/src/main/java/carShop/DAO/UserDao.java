@@ -1,6 +1,9 @@
 package carShop.DAO;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import carShop.entities.User;
 
@@ -19,4 +22,18 @@ public class UserDao implements Dao{
 		em.persist(user);
 		em.getTransaction().commit();
 	}
+
+	
+	public List<User> getUsers(){		
+		EntityManager em = factory.createEntityManager();
+		TypedQuery<User> query = em.createQuery("SELECT u FROM User u",User.class);
+		List<User> listItem=null;
+		try {
+			listItem = query.getResultList();
+		}finally{
+			em.close();														
+		}																																//
+		return listItem;
+	}
+
 }

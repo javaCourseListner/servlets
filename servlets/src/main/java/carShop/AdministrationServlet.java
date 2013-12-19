@@ -1,6 +1,7 @@
 package carShop;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -9,40 +10,41 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import carShop.DAO.UserDao;
 import carShop.entities.User;
 
 public class AdministrationServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-
-	
+	private UserDao userDao = new UserDao();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session = req.getSession();
-		User user =	(User) session.getAttribute("user");
-		if((user != null)&&(user.getLogin().equals("admin"))){
 		req.getRequestDispatcher("adminPage.jsp").forward(req, resp);;	
-		}else{
-			resp.sendRedirect("welcomePage");			
-		}
 	}
 	
 	
 	
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-
-		Map m =req.getParameterMap();
-		for(Object str: m.keySet()){			
-			System.out.println(str);
-		}
-		for(Object str: m.values()){			
-			for(Object s: (String[])str)System.out.println(s);
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		String parm = null;
+		
+		if((parm = req.getParameter("targetUser"))!= null){			
+			User user = userDao.getUserById(parm);
+			if(user != null){
+				req.setAttribute("targetUser", user);
+				req.getRequestDispatcher("userAdminPage.jsp").forward(req, resp);
+			}else{
+				req.getRequestDispatcher("adminPage.jsp").forward(req, resp);
+			}			
+		}else if((parm = req.getParameter("targetUserList"))!= null){			
+			List<User> users = userDao.getUsers();
+			req.setAttribute("targetUserList", users);
+			req.getRequestDispatcher("userListAdminPage.jsp").forward(req, resp);		
 		}
 		
-	}
+		}
 	
 	
 	
@@ -69,4 +71,4 @@ public class AdministrationServlet extends HttpServlet {
 	
 	
 	
-}
+	}

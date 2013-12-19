@@ -15,24 +15,7 @@ import carShop.entities.UserOrder;
 
 public class CarDao implements Dao{
 
-	public static String getHash(String str) {	        
-		if (str == null) return null;
-		MessageDigest md5 ;        
-	    StringBuffer  hexString = new StringBuffer();	        
-	    try {	                                    
-	    	md5 = MessageDigest.getInstance("md5");	            
-	    	md5.reset();
-	    	md5.update(str.getBytes()); 	                        	                        
-	    	byte messageDigest[] = md5.digest();	                        
-	    	for (int i = 0; i < messageDigest.length; i++) {
-	    		hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-	    	}	                                                                                        
-	    }catch (NoSuchAlgorithmException e) {                        
-	    	e.printStackTrace();
-	    }	        
-	    return hexString.toString();
-	}
-		
+
 	
 	public static void main(String[] args) {			
 		
@@ -47,11 +30,12 @@ public class CarDao implements Dao{
 //	cd.setCar(new Car("ostin","red",new Options(true,true,false),64645));	
 //	cd.setCar(new Car("BMW","blue",new Options(false,true,false),645564));
 //	cd.setCar(new Car("Merss","black",new Options(true,true,true),5555));
-//	
-	User u = new User();
-	u.setLogin("admin");
-	u.setPassword(getHash("admin"));
-	u.setAdminRights(true);
+////	
+//	User u = new User();
+//	u.setLogin("admin");
+//	u.setPassword(getHash("admin"));
+//	u.setAdminRights(true);
+//	u.setValid(true);
 //     cd.setUserOrder(new UserOrder(car, u, date));
 //		Car c=new Car();
 //	c.setCarId(1);
@@ -67,9 +51,8 @@ public class CarDao implements Dao{
 //cd.getSumGroup("a");
 //for(Car car:cd.getCars())System.out.println(car);
  
-new UserDao().setUser(u);
-UserOrderDao od=new UserOrderDao();
-System.out.println(od.getSumGroupByMounth("wd"));
+for(User u: new UserDao().getUsers())System.out.println(u);
+//System.out.println(od.getSumGroupByMounth("wd"));
 	
 	
 	}

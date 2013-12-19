@@ -8,15 +8,17 @@
 <title>Car alter</title>
 </head>
 	 <body>
-	 <form action = "welcomePage" method="GET" >
+	 <form action = "adminPage" method="GET" >
 	       To previous page: <input type = "submit" value="back" />    
-	       </form>             
-	       <br> <b>ORDERS:</b>
-	       <br>              
-	        <c:forEach var="car" items="${bucket}">        
-	            <br>Your car model: ${car.model} 
-	            <br>Color: ${car.color}  
-	            <br>Options: ${car.options}                      
+	       </form>             	       
+	       <br>              	        
+	       
+	       <c:forEach var="targetCar" items="${targetCarList}">        
+	            <br><b>Car Id:</b> ${targetCar.carId} 
+	            <br><b>Car model:</b> ${targetCar.model} 
+	            <br><b>Color:</b> ${targetCar.color}  
+	            <br><b>Options:</b> ${targetCar.options}                      
+	            <br><b>Options:</b> ${targetCar.description}
 	        <br>        
 	        </c:forEach>               
 	        <br>                     

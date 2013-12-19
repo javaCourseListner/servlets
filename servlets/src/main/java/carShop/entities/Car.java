@@ -19,6 +19,9 @@ public class Car {
 	
 	private int price;
 
+	private String description;
+	
+		
 	public Car(String model, String color, Options options, int price) { 
 		this.model=model;
 		this.color=color;
@@ -67,6 +70,14 @@ public class Car {
 
 	public void setPrice(int price) {
 		this.price = price;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 }

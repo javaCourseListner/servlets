@@ -8,16 +8,16 @@
 </head>
 <body>
     <h3> Admin page </h3>  
-    <form action = "admin" method="POST" >
-      <pre> Input login of user you want to find:<input type = "text" name = "user" size="15" maxlength="8"/><input type = "submit" value="find" /></pre>        
+    <form action = "adminPage" method="POST" >
+      <pre> Input login of user you want to find:<input type = "text" name = "targetUser" size="15" maxlength="8"/><input type = "submit" value="find" /></pre>        
     </form>  
-    <form action = "admin" method="POST" >
-      <pre> Click to see all users:  <button name="users" value="list"  type="submit">list</button></pre>        
+    <form action = "adminPage" method="POST" >
+      <pre> Click to see all users:  <button name="targetUserList" value="list"  type="submit">list</button></pre>        
     </form>  
-    <form action = "admin" method="POST" >
-       <pre> Input you model of car want to find:<input type = "text" name = "car" size="15" maxlength="8"/><input type = "submit" value="find" /></pre>          
+    <form action = "adminPage" method="POST" >
+       <pre> Input you model of car want to find:<input type = "text" name = "targetCar" size="15" maxlength="8"/><input type = "submit" value="find" /></pre>          
     </form>     
-    <form action = "admin" method="POST" >
+    <form action = "adminPage" method="POST" >
       <pre> Click to see all models:  <button name="cars" value="list"  type="submit">list</button></pre>        
     </form>    
 </body>
