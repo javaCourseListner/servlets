@@ -30,7 +30,7 @@ public class AuthorizationServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
 		if(req.getSession(false) != null){
-			req.getRequestDispatcher("clientWelcomePage.jsp").forward(req, resp);				
+			req.getRequestDispatcher("jsp/user/welcomePage.jsp").forward(req, resp);				
 		}else{
 			req.getRequestDispatcher("guestWelcomePage.html").forward(req, resp);
 		}
@@ -67,7 +67,7 @@ public class AuthorizationServlet extends HttpServlet{
 			 session.setAttribute("user",user);			
 			 List<Car> ls = userOrderDao.getUserOrderCars(login);
 			 session.setAttribute("bucket",ls);
-			 req.getRequestDispatcher("clientWelcomePage.jsp").forward(req, resp);
+			 req.getRequestDispatcher("jsp/user/welcomePage.jsp").forward(req, resp);
 		}else if(user == null){
 			User newUser = new User();
 			newUser.setLogin(login);
@@ -76,7 +76,7 @@ public class AuthorizationServlet extends HttpServlet{
 			HttpSession session = req.getSession(true);			
 			session.setAttribute("user", newUser);
 			session.setAttribute("bucket", new LinkedList<Car>());
-			req.getRequestDispatcher("clientWelcomePage.jsp").forward(req, resp);
+			req.getRequestDispatcher("jsp/user/welcomePage.jsp").forward(req, resp);
 		}
 	}
 

@@ -48,7 +48,24 @@ public class AdministrationServlet extends HttpServlet {
 	
 	
 	
-//	private void orderRegistration(HttpServletRequest req){			 																				
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//	private void orderRegistration(HttpServletRequest req){			 																				
 //	User user = (User) req.getSession().getAttribute("user");
 //	EntitiesManeger  entitiesManeger  = (EntitiesManeger) getServletContext().getAttribute("entitiesManeger");
 //	String model = req.getParameter("model");									

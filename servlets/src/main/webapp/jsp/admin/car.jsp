@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Car alter</title>
+<title>Car</title>
 </head>
 	 <body>
 	 <form action = "adminPage" method="GET" >
@@ -22,6 +22,22 @@
 	        <br>        
 	        </c:forEach>               
 	        <br>                     
+	        	        
+	    <br><form action = "adminPage" method="POST" >
+         Delete: <button name="deleteCar" value="${targetCar.caId}" type="submit">click</button>       
+        </form>  
+        
+        <br><form action = "adminPage" method="POST" >
+         Set price : <button name="setCarPrice" value="${targetCar.caId}" type="submit">click</button>       
+        </form>        
+	        
+		<form action="adminPage" method="POST">
+	    <br>Update description:
+	    <p><textarea rows="10" cols="45" name="updateDescrp"></textarea></p>
+	    <p><input type="submit" value="click"></p>
+	    </form>
+	        
+	        
 	        
 	        <form action = "personalPage" method="POST">       
 	            <b>COMPLETE THE FORM:</b>

@@ -38,14 +38,14 @@ public class PersonalPageServlet extends HttpServlet{
 			Map<String, Long> amount = userOrderDao.getSumGroupByMounth(login);
 			req.setAttribute("monthSum", amount);	
 		}	
-		req.getRequestDispatcher("clientPersonalPage.jsp").forward(req, resp);		
+		req.getRequestDispatcher("jsp/user/personalPage.jsp").forward(req, resp);		
 	}
 	
 	
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
-		req.getRequestDispatcher("clientPersonalPage.jsp").forward(req, resp);
+		req.getRequestDispatcher("jsp/user/personalPage.jsp").forward(req, resp);
 	}
 			
 	

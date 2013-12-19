@@ -27,7 +27,7 @@ public class CarManegerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{		
 		List<Car> listItem = carDao.getCars();
 		req.getServletContext().setAttribute("cars",listItem);
-		req.getRequestDispatcher("carListPage.jsp").forward(req, resp);;
+		req.getRequestDispatcher("jsp/user/carList.jsp").forward(req, resp);;
 	}
 	
 	
@@ -41,7 +41,7 @@ public class CarManegerServlet extends HttpServlet {
 			int id = Integer.parseInt(carToLook);		
 			Car car = carDao.getCarById(id);
 			req.getServletContext().setAttribute("car",car);
-			req.getRequestDispatcher("carUserPage.jsp").forward(req, resp);	
+			req.getRequestDispatcher("jsp/user/car.jsp").forward(req, resp);	
 		}else if (carToBuy != null){	
 			orderRegistration(req, carToBuy);			
 			resp.sendRedirect("personalPage");
