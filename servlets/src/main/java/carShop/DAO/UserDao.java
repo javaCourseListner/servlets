@@ -1,16 +1,11 @@
 package carShop.DAO;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import carShop.entities.User;
 
-public class UserDao {
+public class UserDao implements Dao{
 	
-	private static EntityManagerFactory factory =
-	  Persistence.createEntityManagerFactory("mySqlUnit");			
-		
 	
 	public User getUserById(String login){					
 		EntityManager em = factory.createEntityManager();

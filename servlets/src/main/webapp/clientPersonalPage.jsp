@@ -6,35 +6,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Personal page</title>
 </head>
-	<body>      
-       
+	<body>            
        <form action = "welcomePage" method="GET" >
-       To previous page: <input type = "submit" value="back" />    
-       </form>             
-       <br> <b>ORDERS:</b>
+       To previous page:<button type="submit">back</button></form>                      
+       <br> <b>YOUR ORDERS:</b>
        <br>              
         <c:forEach var="car" items="${bucket}">        
-		    <br>Your car model: ${car.model} 
-		    <br>Color: ${car.color}  
-		    <br>Options: ${car.options}                      
-	    <br>        
-        </c:forEach>               
-        <br>                     
-        <form action = "personalPage" method="POST">	   
-	        <b>COMPLETE THE FORM:</b>
-	        <br> 
-	        <br> <b>Input car model:</b> 
-	        <br> <input type = "text" name = "model" />
-	        <br> <b>Choose color:</b> 
-	        <br><label><input type = "radio" name = "color" value="red" />red</label>
-	        <br><label><input type = "radio" name = "color" value= "blue" />blue</label>
-	        <br><label><input type = "radio" name = "color" value= "green" />green</label>
-	        <br><label><input type = "radio" name = "color" value= "black" />black</label>
-	        <br><b>Select options:</b>
-	        <br><label><input type = "checkbox" name = "conditioner" value= "true"/> conditioner </label>
-	        <br><label><input type = "checkbox" name = "hydroamplifier" value= "true"/> hydroamplifier </label>
-	        <br><label><input type = "checkbox" name = "automaticTransmission" value= "true"/> automatic transmission </label>
-	        <br><input type="reset" name="reset" value="Clean">  <input type = "submit" value="Submit"/>       
-        </form>
+		    <br><b>Car model:</b> ${car.model} 
+		    <b>Color:        </b> ${car.color}  
+		    <b>Options:      </b> ${car.options}                      
+	        <br><b>Price:    </b> ${car.price} 
+	       <br>     
+        </c:forEach>      
+        <br>          
+         <form action = "personalPage" method="POST" >
+        <b> To count amount:</b> <button name="showOrdersSum" type="submit">count</button></form>                
+        ${sum}                 
+	    
+	   
+	   <br>
+	    <form action = "personalPage" method="POST" >
+	    <b> Group by month:</b> <button name="showMonthSum" type="submit">count</button></form>                
+        <c:forEach var="entry" items="${monthSum}">
+		 <c:out value="${entry.key}"/>:
+		 <c:out value="${entry.value}"/>
+		</c:forEach>	
 	</body>
 </html>

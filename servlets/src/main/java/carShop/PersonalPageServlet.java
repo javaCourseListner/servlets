@@ -1,28 +1,48 @@
 package carShop;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import carShop.entities.Car;
+import carShop.DAO.UserOrderDao;
 import carShop.entities.User;
-import carShop.entities.EntitiesManeger;
-import carShop.entities.Options;
-
 
 public class PersonalPageServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 	
-//	@Override
-//	protected void doPost (HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {		
-//		orderRegistration(req);
-//		req.getRequestDispatcher("clientPersonalPage.jsp").forward(req, resp);		
-//	}
-		
+	private static UserOrderDao userOrderDao = new UserOrderDao();
+	
+	
+	@Override
+	protected void doPost (HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {		
+		String showSum = req.getParameter("showOrdersSum");
+		String showMonthSum = req.getParameter("showMonthSum");
+		if(showSum != null){
+			HttpSession session =req.getSession();
+			User user = (User) session.getAttribute("user");
+			String login = user.getLogin();
+			
+			
+			Long amount = userOrderDao.getOrdersAmount(login);
+			req.setAttribute("sum", amount);
+		}else if(showMonthSum !=null){
+			HttpSession session =req.getSession();
+			User user = (User) session.getAttribute("user");
+			String login = user.getLogin();
+			Map<String, Long> amount = userOrderDao.getSumGroupByMounth(login);
+			req.setAttribute("monthSum", amount);	
+		}	
+		req.getRequestDispatcher("clientPersonalPage.jsp").forward(req, resp);		
+	}
+	
+	
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
 		req.getRequestDispatcher("clientPersonalPage.jsp").forward(req, resp);
@@ -31,10 +51,18 @@ public class PersonalPageServlet extends HttpServlet{
 	
 	
 	
-	
-	
-	
-	
+/*	
+	@SuppressWarnings("unchecked")
+	private long countAmount(HttpServletRequest req){				//fast as Ali, but without JPQL)
+		long result = 0;										 	 
+		HttpSession session =req.getSession();
+		List<Car> cars = (List<Car>) session.getAttribute("bucket");	
+		for(Car car:cars){
+			result=car.getPrice();
+		}
+		return result;	
+	}
+*/	
 	
 	
 	

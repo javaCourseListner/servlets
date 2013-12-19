@@ -8,14 +8,15 @@
 <title>Authorization page</title>
 </head>
 	<body>                     	
-		<h3> You are welcome ${client.login} </h3>
-		<form action="personalPage" method="GET">
+		<h3> You are welcome ${user.login} </h3>
+		<form action="clientPersonalPage.jsp" method="GET">
 		Your personal page here: <input type="submit" value="get it)"></form>
 		<br>
-		<form action="logout" method="GET">
-		To logout click  here: <input type="submit" value="logout"></form>	
 		<form action="carManeger" method="GET">
-        To car list click  here: <input type="submit" value="cars"></form>	
+        To get car list click  here: <input type="submit" value="cars"></form>  
+		<br>
+        <form action="logout" method="GET">
+        To logout click  here: <input type="submit" value="logout"></form>  
 	</body>
 </html>
 

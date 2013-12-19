@@ -1,31 +1,18 @@
 package carShop.DAO;
 
-import java.util.Date;
 import java.util.List;
-
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import carShop.entities.Car;
-import carShop.entities.Options;
 import carShop.entities.User;
 import carShop.entities.UserOrder;
 
 
-public class CarDao {
-	
-	private static final String PERSISTENCE_UNIT_NAME = "mySqlUnit";
-	private static EntityManagerFactory factory;
- 
-	
-	static{
-		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);			
-	}
-	
-	
-	
+public class CarDao implements Dao{
+
+
+		
 	
 	public static void main(String[] args) {			
 		
@@ -36,26 +23,34 @@ public class CarDao {
 //			}
 //		}		
 	
-	CarDao cd =new CarDao();
-	cd.setCar(new Car("ostin","red",new Options(true,true,false),64645));	
-	cd.setCar(new Car("BMW","blue",new Options(false,true,false),645564));
-	cd.setCar(new Car("Merss","black",new Options(true,true,true),5555));
+//   CarDao cd =new CarDao();
+//	cd.setCar(new Car("ostin","red",new Options(true,true,false),64645));	
+//	cd.setCar(new Car("BMW","blue",new Options(false,true,false),645564));
+//	cd.setCar(new Car("Merss","black",new Options(true,true,true),5555));
+//	
+//	User u = new User();
+	//u.setLogin("a");
+//	u.setPassword("xxx");
+//     cd.setUserOrder(new UserOrder(car, u, date));
+//		Car c=new Car();
+//	c.setCarId(1);
+	//u.getUserOrder().add(new UserOrder(c, u, new Date(43342)));
+//	cd.setUser(u);
+//	
+//	Car c=new Car();
+//	c.setCarId(1);
+//	cd.setUserOrder(new UserOrder(c, u, new Date(44444)));
+	//Long cg=cd.getSum("qq");
 	
-	User u = new User();
-	u.setLogin("adikrhrr");
-	u.setPassword("xxx");
-	Car c=new Car();
-	c.setCarId(1);
-	u.getUserOrder().add(new UserOrder(c, u, new Date(43342)));
-	cd.setUser(u);
+		//System.out.println(cg);
+//cd.getSumGroup("a");
+//for(Car car:cd.getCars())System.out.println(car);
+ 
+
+UserOrderDao od=new UserOrderDao();
+System.out.println(od.getSumGroupByMounth("wd"));
 	
-	//Car c=new Car();
-	//c.setCarId(1);
-	cd.setUserOrder(new UserOrder(c, u, new Date()));
-	List<Car> cg=cd.getUserOrderCars("adikrhrr");
-	for(Car car:cg){
-		System.out.println(car);
-	}
+	
 	}
 	
 	
@@ -107,6 +102,7 @@ public class CarDao {
 
 	public List<Car> getUserOrderCars(String login){		
 		EntityManager em = factory.createEntityManager();
+		
 		TypedQuery<Car> query = 
 		em.createQuery(" SELECT c FROM Car c, UserOrder u "
 					  +" WHERE c.carId=u.car.carId"
@@ -122,6 +118,25 @@ public class CarDao {
 		return listItem;
 	}
 
+	public Long getOrdersAmount(String login){		
+		EntityManager em = factory.createEntityManager();
+		TypedQuery<Long> query = 
+		em.createQuery(" SELECT SUM(c.price) FROM Car c, UserOrder u "
+					  +" WHERE c.carId=u.car.carId"
+					  +" AND u.user.login=:login", Long.class);						
+		query.setParameter("login",login);
+		Long i =null;
+		try {
+			 i = query.getSingleResult();
+		}finally{
+			em.close();														
+		}																																//
+		return i;
+	}
+	
+	
+	
+	
 //	TypedQuery<Integer> query = 
 //	em.createQuery(" SELECT o.order_header_id FROM order_header o, customer c "
 //				  +" WHERE c.customer_id=o.customer_id.customer_id"
@@ -136,4 +151,21 @@ public class CarDao {
 //		for(Integer i:listM){
 //			System.out.println(i.toString());
 //		}
+
+//	TypedQuery<Integer> query = 
+//	em.createQuery(" SELECT o.order_header_id FROM order_header o, customer c "
+//				  +" WHERE c.customer_id=o.customer_id.customer_id"
+//				  +" AND c.customer_name='Customer1'",Integer.class);		
+//	List<Integer> listM=null;
+//	try {
+//		listM=query.getResultList();
+//	}finally{
+//		em.close();													
+//	}																	
+//	if(listM != null){
+//		for(Integer i:listM){
+//			System.out.println(i.toString());
+//		}
+
+	
 }

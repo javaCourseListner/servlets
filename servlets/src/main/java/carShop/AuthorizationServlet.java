@@ -5,6 +5,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,17 +14,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import carShop.DAO.CarDao;
+import carShop.DAO.UserDao;
+import carShop.DAO.UserOrderDao;
 import carShop.entities.Car;
 import carShop.entities.User;
-import carShop.entities.EntitiesManeger;
+
 
 
 public class AuthorizationServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
-	private static CarDao carDao = new CarDao();
-	
+	private static UserDao userDao = new UserDao();
+	private static UserOrderDao userOrderDao = new UserOrderDao();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
@@ -39,34 +42,62 @@ public class AuthorizationServlet extends HttpServlet{
 	}
 
 	private void clientAuthorisation(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
-		String login = req.getParameter("login");
-		String password = getHash(req.getParameter("password"));
 		
-		EntitiesManeger entitiesManeger = (EntitiesManeger) getServletContext().getAttribute("entitiesManeger");			
-		User user = entitiesManeger.getUserById(login);
+		String login = req.getParameter("login");		
+		String password = req.getParameter("password");											
+		if(!isAuthInputValid(login)){			
+			resp.sendRedirect("errorPage.html");
+			return;
+		}else if(!isAuthInputValid(password)){			
+			resp.sendRedirect("errorPage.html");
+			return;
+		}
 		
-		if((login == null)||(password == null)){			
-			req.getRequestDispatcher("errorPage.html").forward(req, resp);
-		}else if((user != null)&&(!password.equals(user.getPassword()))){			
-			req.getRequestDispatcher("errorPage.html").forward(req, resp);
-		}else if((user != null)&&(password.equals(user.getPassword()))){				
-			HttpSession session = req.getSession(true);
+		String passwordHash = getHash(password);
+		User user = userDao.getUserById(login);	
+		
+		if((user != null)&&(!passwordHash.equals(user.getPassword()))){						
+			resp.sendRedirect("errorPage.html");
+		}else if(isValidSuperUser(passwordHash, user)){
+			 HttpSession session = req.getSession(true);
 			 session.setAttribute("user",user);
-			 List<Car> ls = carDao.getUserOrderCars(login);
+			 resp.sendRedirect("adminServlet");			
+		}else if(isValidUser(passwordHash, user)){				
+			 HttpSession session = req.getSession(true);
+			 session.setAttribute("user",user);			
+			 List<Car> ls = userOrderDao.getUserOrderCars(login);
 			 session.setAttribute("bucket",ls);
 			 req.getRequestDispatcher("clientWelcomePage.jsp").forward(req, resp);
 		}else if(user == null){
 			User newUser = new User();
 			newUser.setLogin(login);
-			newUser.setPassword(password);			
-			entitiesManeger .setUser(newUser);
+			newUser.setPassword(passwordHash);			
+			userDao.setUser(newUser);
 			HttpSession session = req.getSession(true);			
 			session.setAttribute("user", newUser);
 			session.setAttribute("bucket", new LinkedList<Car>());
 			req.getRequestDispatcher("clientWelcomePage.jsp").forward(req, resp);
 		}
 	}
+
+	
+	private boolean isAuthInputValid(String authInpt){
+		if(authInpt == null)return false;
+		Pattern p = Pattern.compile("[a-zA-Z0-9]{4,12}"); 
+        Matcher m = p.matcher(authInpt); 
+        return m.matches(); 
+	}
+	
+	private boolean isValidUser(String passwordHash, User user) {
+		return (user != null)&&(passwordHash.equals(user.getPassword()));
+	}
 				
+	private boolean isValidSuperUser(String passwordHash, User user) {
+		return ((user != null)&&
+				(user.isAdminRights()== true)&&
+				(passwordHash.equals(user.getPassword())));
+	}
+	
 	public String getHash(String str) {	        
 		if (str == null) return null;
 		MessageDigest md5 ;        
@@ -85,13 +116,5 @@ public class AuthorizationServlet extends HttpServlet{
 	    return hexString.toString();
 	}
 	
-	
-	@Override
-	public void init() throws ServletException {									
-		EntitiesManeger  entitiesManeger  = (EntitiesManeger)getServletContext().getAttribute("entitiesManeger");		
-		if (entitiesManeger == null){
-			entitiesManeger = new EntitiesManeger ();
-			getServletContext().setAttribute("entitiesManeger", entitiesManeger );
-	 	}
-	}
+
 }

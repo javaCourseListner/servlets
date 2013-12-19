@@ -8,15 +8,16 @@
 <title>Car</title>
 </head>
     <body>        
+        <form action = "carManeger" method="GET" >
+         To previous page: <button type="submit">back</button></form>  
         <br>Car: ${car.model} 
         <br>Color: ${car.color}  
         <br>Options: ${car.options}                      
+        <br>Price: ${car.price}
         <br>        
          <form action = "carManeger" method="POST" >
          To create order: <button name="carToBuy" value="${car.carId}" type="submit">buy</button>       
         </form>  
-        <form action = "carManeger" method="GET" >
-         To previous page: <button type="submit">back</button>       
-        </form>  
+              
     </body>
 </html>

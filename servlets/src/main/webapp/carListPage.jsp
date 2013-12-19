@@ -8,6 +8,9 @@
 <title>Car List</title>
 </head>
     <body> 
+       <form action = "welcomePage" method="GET" >
+       To previous page: <button type="submit">back</button></form>
+       
         <c:forEach var="car" items="${cars}">        
             <br>Car model: ${car.model} 
             <br>Color: ${car.color}  

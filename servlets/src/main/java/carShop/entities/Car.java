@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Car {
 
 	@Id
-	@OneToMany
+
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private int carId;
 	

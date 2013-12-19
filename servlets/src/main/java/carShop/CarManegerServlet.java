@@ -41,11 +41,10 @@ public class CarManegerServlet extends HttpServlet {
 			int id = Integer.parseInt(carToLook);		
 			Car car = carDao.getCarById(id);
 			req.getServletContext().setAttribute("car",car);
-			System.out.println("nn");
 			req.getRequestDispatcher("carUserPage.jsp").forward(req, resp);	
 		}else if (carToBuy != null){	
 			orderRegistration(req, carToBuy);			
-			req.getRequestDispatcher("clientPersonalPage.jsp").forward(req, resp);
+			resp.sendRedirect("personalPage");
 		}		
 	}	
 	
