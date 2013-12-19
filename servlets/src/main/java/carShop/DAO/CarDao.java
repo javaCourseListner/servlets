@@ -37,21 +37,25 @@ public class CarDao {
 //		}		
 	
 	CarDao cd =new CarDao();
-	cd.setCar(new Car("ostin","red",new Options(true,true,false)));	
-	cd.setCar(new Car("BMW","blue",new Options(false,true,false)));
-	cd.setCar(new Car("Merss","black",new Options(true,true,true)));
+	cd.setCar(new Car("ostin","red",new Options(true,true,false),64645));	
+	cd.setCar(new Car("BMW","blue",new Options(false,true,false),645564));
+	cd.setCar(new Car("Merss","black",new Options(true,true,true),5555));
 	
 	User u = new User();
-	u.setLogin("adikrr");
+	u.setLogin("adikrhrr");
 	u.setPassword("xxx");
 	Car c=new Car();
 	c.setCarId(1);
-	u.getUserOrder().add(new UserOrder(c, u, new Date()));
+	u.getUserOrder().add(new UserOrder(c, u, new Date(43342)));
 	cd.setUser(u);
 	
 	//Car c=new Car();
 	//c.setCarId(1);
 	cd.setUserOrder(new UserOrder(c, u, new Date()));
+	List<Car> cg=cd.getUserOrderCars("adikrhrr");
+	for(Car car:cg){
+		System.out.println(car);
+	}
 	}
 	
 	
@@ -101,7 +105,35 @@ public class CarDao {
 		return listItem;
 	}
 
+	public List<Car> getUserOrderCars(String login){		
+		EntityManager em = factory.createEntityManager();
+		TypedQuery<Car> query = 
+		em.createQuery(" SELECT c FROM Car c, UserOrder u "
+					  +" WHERE c.carId=u.car.carId"
+					  +" AND u.user.login=:login", Car.class);				
+		
+		query.setParameter("login",login);
+		List<Car> listItem=null;
+		try {
+			listItem=query.getResultList();
+		}finally{
+			em.close();														
+		}																																//
+		return listItem;
+	}
 
-
-
+//	TypedQuery<Integer> query = 
+//	em.createQuery(" SELECT o.order_header_id FROM order_header o, customer c "
+//				  +" WHERE c.customer_id=o.customer_id.customer_id"
+//				  +" AND c.customer_name='Customer1'",Integer.class);		
+//	List<Integer> listM=null;
+//	try {
+//		listM=query.getResultList();
+//	}finally{
+//		em.close();													
+//	}																	
+//	if(listM != null){
+//		for(Integer i:listM){
+//			System.out.println(i.toString());
+//		}
 }

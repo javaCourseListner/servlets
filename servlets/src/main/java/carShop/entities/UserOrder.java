@@ -22,7 +22,7 @@ public class UserOrder {
 	private int userOrderId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="CarId")
+	@JoinColumn(name="carId")
 	private Car car;
 	
 	

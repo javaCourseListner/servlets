@@ -13,7 +13,7 @@
        </form>             
        <br> <b>ORDERS:</b>
        <br>              
-        <c:forEach var="car" items="${user.car}">        
+        <c:forEach var="car" items="${bucket}">        
 		    <br>Your car model: ${car.model} 
 		    <br>Color: ${car.color}  
 		    <br>Options: ${car.options}                      

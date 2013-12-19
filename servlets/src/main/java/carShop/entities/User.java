@@ -15,6 +15,7 @@ public class User {
 	
 	private String password;
 	
+	private boolean adminRights;
 	 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	public List<UserOrder> userOrder = new ArrayList<UserOrder>();
@@ -54,5 +55,13 @@ public class User {
 	@Override
 	public String toString() {
 		return login.toString();
+	}
+
+	public boolean isAdminRights() {
+		return adminRights;
+	}
+
+	public void setAdminRights(boolean adminRights) {
+		this.adminRights = adminRights;
 	}	
 }

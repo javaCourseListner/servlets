@@ -17,13 +17,13 @@ public class Car {
 	@Embedded
 	private Options options ;
 	
+	private int price;
 
-
-	public Car(String model, String color, Options options) { 
+	public Car(String model, String color, Options options, int price) { 
 		this.model=model;
 		this.color=color;
 		this.options=options;
-
+		this.price=price;
 	}
 	
 	public Car() { }
@@ -59,6 +59,14 @@ public class Car {
 	
 	public Options getOptions() {
 		return options;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
 	}
 	
 }

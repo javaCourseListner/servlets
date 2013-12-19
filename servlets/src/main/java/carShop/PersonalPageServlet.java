@@ -62,13 +62,6 @@ public class PersonalPageServlet extends HttpServlet{
 //		return opt;
 //	}
 				
-	@Override
-	public void init() throws ServletException {									
-		EntitiesManeger  entitiesManeger  = (EntitiesManeger)getServletContext().getAttribute("entitiesManeger");		
-		if (entitiesManeger == null){
-			entitiesManeger = new EntitiesManeger ();
-			getServletContext().setAttribute("entitiesManeger", entitiesManeger );
-	 	}
-	}
+
 	
 }

@@ -3,11 +3,17 @@ package carShop;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import carShop.DAO.CarDao;
+import carShop.entities.Car;
 import carShop.entities.User;
 import carShop.entities.EntitiesManeger;
 
@@ -15,7 +21,9 @@ import carShop.entities.EntitiesManeger;
 public class AuthorizationServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
-		
+	private static CarDao carDao = new CarDao();
+	
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
 		if(req.getSession(false) != null){
@@ -43,15 +51,18 @@ public class AuthorizationServlet extends HttpServlet{
 			req.getRequestDispatcher("errorPage.html").forward(req, resp);
 		}else if((user != null)&&(password.equals(user.getPassword()))){				
 			HttpSession session = req.getSession(true);
-			session.setAttribute("user",user);
-			req.getRequestDispatcher("clientWelcomePage.jsp").forward(req, resp);
+			 session.setAttribute("user",user);
+			 List<Car> ls = carDao.getUserOrderCars(login);
+			 session.setAttribute("bucket",ls);
+			 req.getRequestDispatcher("clientWelcomePage.jsp").forward(req, resp);
 		}else if(user == null){
 			User newUser = new User();
 			newUser.setLogin(login);
 			newUser.setPassword(password);			
 			entitiesManeger .setUser(newUser);
-			HttpSession session = req.getSession(true);
+			HttpSession session = req.getSession(true);			
 			session.setAttribute("user", newUser);
+			session.setAttribute("bucket", new LinkedList<Car>());
 			req.getRequestDispatcher("clientWelcomePage.jsp").forward(req, resp);
 		}
 	}
@@ -72,5 +83,15 @@ public class AuthorizationServlet extends HttpServlet{
 	    	e.printStackTrace();
 	    }	        
 	    return hexString.toString();
+	}
+	
+	
+	@Override
+	public void init() throws ServletException {									
+		EntitiesManeger  entitiesManeger  = (EntitiesManeger)getServletContext().getAttribute("entitiesManeger");		
+		if (entitiesManeger == null){
+			entitiesManeger = new EntitiesManeger ();
+			getServletContext().setAttribute("entitiesManeger", entitiesManeger );
+	 	}
 	}
 }
