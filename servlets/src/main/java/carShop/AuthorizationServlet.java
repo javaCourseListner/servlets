@@ -61,7 +61,7 @@ public class AuthorizationServlet extends HttpServlet{
 		}else if(isValidSuperUser(passwordHash, user)){
 			 HttpSession session = req.getSession(true);
 			 session.setAttribute("user",user);
-			 resp.sendRedirect("adminServlet");			
+			 resp.sendRedirect("adminPage");			
 		}else if(isValidUser(passwordHash, user)){				
 			 HttpSession session = req.getSession(true);
 			 session.setAttribute("user",user);			
