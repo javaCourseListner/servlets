@@ -41,7 +41,7 @@ public class PersonalPageServlet extends HttpServlet{
 		req.getRequestDispatcher("jsp/user/personalPage.jsp").forward(req, resp);		
 	}
 	
-	
+	//hgh
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
