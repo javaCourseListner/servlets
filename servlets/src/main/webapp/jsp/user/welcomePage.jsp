@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Authorization page</title>
 </head>
-	<body>                     	
+	<body>              	
 		<h3> You are welcome ${user.login} </h3>
 		<form action="clientPersonalPage.jsp" method="GET">
 		Your personal page here: <input type="submit" value="get it)"></form>
@@ -19,5 +19,3 @@
         To logout click  here: <input type="submit" value="logout"></form>  
 	</body>
 </html>
-
-
