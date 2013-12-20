@@ -19,8 +19,7 @@ public class UserAdministrationServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getRequestDispatcher("jsp/admin/userPanel.jsp").forward(req, resp);;	
 	}
-	
-		
+			
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
@@ -38,15 +37,29 @@ public class UserAdministrationServlet extends HttpServlet {
 			List<User> users = userDao.getUsers();
 			req.setAttribute("targetUserList", users);
 			req.getRequestDispatcher("jsp/admin/userList.jsp").forward(req, resp);		
-		}else if((parm = req.getParameter("validate"))!= null){
-		
-						
+		}else if((parm = req.getParameter("setAdmRts"))!= null){		
+			userDao.setAdminRights(parm);
+			User user = userDao.getUserById(parm);
+			req.setAttribute("targetUser", user);			
+			req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);		
 		}else if((parm = req.getParameter("delete"))!= null){
 			userDao.deleteUser(parm);
 			req.getRequestDispatcher("jsp/admin/userPanel.jsp").forward(req, resp);
-		}else if((parm = req.getParameter("adminRights"))!= null){
-		
-		
+		}else if((parm = req.getParameter("valid"))!= null){		
+			userDao.setValidTrue(parm);
+			User user = userDao.getUserById(parm);
+			req.setAttribute("targetUser", user);			
+			req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);	
+		}else if((parm = req.getParameter("unvalid"))!= null){		
+			userDao.setValidFalse(parm);
+			User user = userDao.getUserById(parm);
+			req.setAttribute("targetUser", user);			
+			req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);	
+		}else if((parm = req.getParameter("rmvAdmRts"))!= null){		
+			userDao.removeAdminRights(parm);
+			User user = userDao.getUserById(parm);
+			req.setAttribute("targetUser", user);			
+			req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);	
 		}
 		
 	}

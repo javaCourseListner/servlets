@@ -15,18 +15,27 @@
             <br><b>Is valid:</b> ${targetUser.valid} 
             <br><b>Has admin rights:</b> ${targetUser.adminRights}                       
             <br>        
-          
-        <br><form action = "userAdministration" method="POST" >
-         Delete: <button name="delete" value="${targetUser.login}" type="submit">click</button>       
+ 
+        
+        <br> Validation :           
+        <form action = "userAdministration" method="POST" >
+        <button name="unvalid" value="${targetUser.login}" type="submit">remove</button>       
+        </form> 
+        <form action = "userAdministration" method="POST" >
+        <button name="valid" value="${targetUser.login}" type="submit">set</button>       
         </form>  
         
-        <br><form action = "userAdministration" method="POST" >
-         Validate : <button name="validate" value="${targetUser.login}" type="submit">click</button>       
-        </form>  
-
-        <br><form action = "userAdministration" method="POST" >
-         Give admin rights: <button name="adminRights" value="${targetUser.login}" type="submit">click</button>       
+        <br>Admin rights:      
+        <form action = "userAdministration" method="POST" >
+        <button name="rmvAdmRts" value="${targetUser.login}" type="submit">remove</button>       
         </form> 
-
+        <form action = "userAdministration" method="POST" >
+        <button name="setAdmRts" value="${targetUser.login}" type="submit">set</button>       
+        </form> 
+                  
+        <br>Delete:
+        <form action = "userAdministration" method="POST" >
+        <button name="delete" value="${targetUser.login}" type="submit">delete</button>       
+        </form> 
 </body>
 </html>

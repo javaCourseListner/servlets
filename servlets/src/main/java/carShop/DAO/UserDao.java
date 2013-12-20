@@ -9,8 +9,7 @@ import carShop.entities.User;
 
 
 public class UserDao implements Dao{
-	
-	
+		
 	public User getUserById(String login){					
 		EntityManager em = factory.createEntityManager();		
 		User user = null;
@@ -21,8 +20,7 @@ public class UserDao implements Dao{
 		}
 		return user;
 	}
-	
-	
+		
 	public void setUser(User user){		
 		EntityManager em = factory.createEntityManager();
 		try{	
@@ -62,7 +60,6 @@ public class UserDao implements Dao{
 		return listItem;
 	}
 
-
 	public void setValidTrue(String login){		
 		EntityManager em = factory.createEntityManager();
 		try{
@@ -76,8 +73,46 @@ public class UserDao implements Dao{
 			em.close();
 		}	
 	}
-		
+	
+	public void setValidFalse(String login){		
+		EntityManager em = factory.createEntityManager();
+		try{
+			em.getTransaction().begin();
+		    User user = em.getReference(User.class, login);
+			user.setValid(false);
+			em.getTransaction().commit();
+		}catch(Exception e){
+			em.getTransaction().rollback();
+		}finally{
+			em.close();
+		}	
+	}
+	
+	public void setAdminRights(String login){		
+		EntityManager em = factory.createEntityManager();
+		try{
+			em.getTransaction().begin();
+		    User user = em.getReference(User.class, login);
+			user.setAdminRights(true);
+			em.getTransaction().commit();
+		}catch(Exception e){
+			em.getTransaction().rollback();
+		}finally{
+			em.close();
+		}	
+	}
+	
+	public void removeAdminRights(String login){		
+		EntityManager em = factory.createEntityManager();
+		try{
+			em.getTransaction().begin();
+		    User user = em.getReference(User.class, login);
+			user.setAdminRights(false);
+			em.getTransaction().commit();
+		}catch(Exception e){
+			em.getTransaction().rollback();
+		}finally{
+			em.close();
+		}	
+	}
 }
-	
-	
-

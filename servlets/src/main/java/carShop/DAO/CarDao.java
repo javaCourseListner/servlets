@@ -80,8 +80,7 @@ public class CarDao implements Dao{
 		EntityManager em = factory.createEntityManager();
 		Car car = null;
 		try{	
-			car = em.find(Car.class, id);
-		
+			car = em.find(Car.class, id);		
 		}finally{
 			em.close();
 		}
