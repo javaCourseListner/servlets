@@ -20,8 +20,7 @@ public class UserAdministrationServlet extends HttpServlet {
 		req.getRequestDispatcher("jsp/admin/userPanel.jsp").forward(req, resp);;	
 	}
 	
-	
-	
+		
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
@@ -43,8 +42,8 @@ public class UserAdministrationServlet extends HttpServlet {
 		
 						
 		}else if((parm = req.getParameter("delete"))!= null){
-		userDao.deleteUser(parm);
-		req.getRequestDispatcher("jsp/admin/userPanel.jsp").forward(req, resp);
+			userDao.deleteUser(parm);
+			req.getRequestDispatcher("jsp/admin/userPanel.jsp").forward(req, resp);
 		}else if((parm = req.getParameter("adminRights"))!= null){
 		
 		

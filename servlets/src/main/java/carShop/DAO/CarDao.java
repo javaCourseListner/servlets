@@ -20,16 +20,20 @@ public class CarDao implements Dao{
 	
 			
 		public static void main(String[] args) {
-//			UserDao ud=new UserDao();
-//			CarDao cd=new CarDao();
-//			UserOrderDao uod = new UserOrderDao();
+			UserDao ud=new UserDao();
+			CarDao cd=new CarDao();
+			UserOrderDao uod = new UserOrderDao();
 //
-//		ud.deleteUser("adik");
-		  // ud.setUser(new User("adik","adik",null));				
+ // 		ud.deleteUser("adik");
+		  
+			User u=new User("kiki", getHash("kiki"), null);
+			u.setAdminRights(true);
+			u.setValid(true);
+			ud.setUser(u);				
 //			User user = ud.getUserById("adik");		
 //			Car car = cd.getCarById(1);		
 //			uod.setUserOrder(new UserOrder(car, user, new Date()));	
-//			uod.deleteUserOrder(6);
+		//	ud.deleteUser("kiki");
 		}
 //		List<Car> listItem = new CarDao().getCars();
 //		if(listItem != null){
@@ -96,5 +100,23 @@ public class CarDao implements Dao{
 		}																																//
 		return listItem;
 	}
-		
+	
+	
+	public static  String getHash(String str) {	        
+		if (str == null) return null;
+		MessageDigest md5 ;        
+	    StringBuffer  hexString = new StringBuffer();	        
+	    try {	                                    
+	    	md5 = MessageDigest.getInstance("md5");	            
+	    	md5.reset();
+	    	md5.update(str.getBytes()); 	                        	                        
+	    	byte messageDigest[] = md5.digest();	                        
+	    	for (int i = 0; i < messageDigest.length; i++) {
+	    		hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+	    	}	                                                                                        
+	    }catch (NoSuchAlgorithmException e) {                        
+	    	e.printStackTrace();
+	    }	        
+	    return hexString.toString();
+	}		
 }

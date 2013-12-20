@@ -109,7 +109,7 @@ public class AuthorizationServlet extends HttpServlet{
 				(passwordHash.equals(user.getPassword())));
 	}
 	
-	public String getHash(String str) {	        
+	private String getHash(String str) {	        
 		if (str == null) return null;
 		MessageDigest md5 ;        
 	    StringBuffer  hexString = new StringBuffer();	        

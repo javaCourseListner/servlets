@@ -5,5 +5,5 @@ import javax.persistence.Persistence;
 
 public interface Dao {	
 	 static EntityManagerFactory factory =
-			Persistence.createEntityManagerFactory("mySqlUnit");		
+			Persistence.createEntityManagerFactory("hiberUnit");		
 }
