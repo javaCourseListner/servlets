@@ -18,6 +18,7 @@ import carShop.DAO.UserDao;
 import carShop.DAO.UserOrderDao;
 import carShop.entities.Car;
 import carShop.entities.User;
+import carShop.entities.UserOrder;
 
 
 
@@ -71,7 +72,7 @@ public class AuthorizationServlet extends HttpServlet{
 		}else if(isValidUser(passwordHash, user)){				
 			 HttpSession session = req.getSession(true);
 			 session.setAttribute("user",user);			
-			 List<Car> ls = userOrderDao.getUserOrderCars(login);
+			 List<UserOrder> ls = userOrderDao.getUserOrders(login);
 			 session.setAttribute("bucket",ls);
 			 req.getRequestDispatcher("jsp/user/welcomePage.jsp").forward(req, resp);
 		}else if(user == null){

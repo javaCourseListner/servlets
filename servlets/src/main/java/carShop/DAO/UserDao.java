@@ -115,4 +115,32 @@ public class UserDao implements Dao{
 			em.close();
 		}	
 	}
+	
+	public List<User> getInvalidUsers(){		
+		EntityManager em = factory.createEntityManager();
+		TypedQuery<User> query = em.createQuery(
+									"SELECT u FROM User u "
+								  + "WHERE u.valid=false",User.class);
+		List<User> listItem=null;
+		try {
+			listItem = query.getResultList();
+		}finally{
+			em.close();														
+		}																																//
+		return listItem;
+	}
+	
+	public List<User> getAdminUsers(){		
+		EntityManager em = factory.createEntityManager();
+		TypedQuery<User> query = em.createQuery(
+									"SELECT u FROM User u "
+								  + "WHERE u.adminRights=true",User.class);
+		List<User> listItem=null;
+		try {
+			listItem = query.getResultList();
+		}finally{
+			em.close();														
+		}																																//
+		return listItem;
+	}
 }

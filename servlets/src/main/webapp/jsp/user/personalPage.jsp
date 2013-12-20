@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,11 +12,12 @@
        To previous page:<button type="submit">back</button></form>                      
        <br> <b>YOUR ORDERS:</b>
        <br>              
-        <c:forEach var="car" items="${bucket}">        
-		    <br><b>Car model:</b> ${car.model} 
-		    <b>Color:        </b> ${car.color}  
-		    <b>Options:      </b> ${car.options}                      
-	        <br><b>Price:    </b> ${car.price} 
+        <c:forEach var="order" items="${bucket}">        
+		   <br><b>Car model:</b> ${order.car.model} 
+		   <b>Color:        </b> ${order.car.color}  
+		   <b>Options:      </b> ${order.car.options}                      
+	       <br><b>Price:    </b> ${order.car.price} 
+	       <br><b>Date:      </b> <fmt:formatDate type="date" value="${order.date}" />	         
 	       <br>     
         </c:forEach>      
         <br>          

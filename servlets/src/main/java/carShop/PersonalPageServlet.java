@@ -18,6 +18,10 @@ public class PersonalPageServlet extends HttpServlet{
 	
 	private static UserOrderDao userOrderDao = new UserOrderDao();
 	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
+		req.getRequestDispatcher("jsp/user/personalPage.jsp").forward(req, resp);
+	}
 	
 	@Override
 	protected void doPost (HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {		
@@ -26,9 +30,7 @@ public class PersonalPageServlet extends HttpServlet{
 		if(showSum != null){
 			HttpSession session =req.getSession();
 			User user = (User) session.getAttribute("user");
-			String login = user.getLogin();
-			
-			
+			String login = user.getLogin();						
 			Long amount = userOrderDao.getOrdersAmount(login);
 			req.setAttribute("sum", amount);
 		}else if(showMonthSum !=null){
@@ -41,12 +43,8 @@ public class PersonalPageServlet extends HttpServlet{
 		req.getRequestDispatcher("jsp/user/personalPage.jsp").forward(req, resp);		
 	}
 	
-	//hgh
 	
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
-		req.getRequestDispatcher("jsp/user/personalPage.jsp").forward(req, resp);
-	}
+
 			
 	
 	

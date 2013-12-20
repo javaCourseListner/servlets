@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,9 +17,27 @@
             <br>        
  
         
+        <br> Get orders:           
+        <form action = "userAdministration" method="POST" >
+        <button name="userOrders" value="${targetUser.login}" type="submit">orders</button>       
+        </form> 
+        
+       <br>              
+        <c:forEach var="order" items="${orders}">        
+           <br><b>Car model:</b> ${order.car.model} 
+           <b>Color:        </b> ${order.car.color}  
+           <b>Options:      </b> ${order.car.options}                      
+           <br><b>Price:    </b> ${order.car.price} 
+           <br><b>Date:     </b> <fmt:formatDate type="date" value="${order.date}" />                      
+           <form action = "userAdministration" method="POST" >
+           <input type="hidden" name = "user" value="${targetUser.login}">           
+           <button name="dltOrder" value="${order.userOrderId}" type="submit">delete</button>       
+           </form> 
+           <br>     
+        </c:forEach>                   
         <br> Validation :           
         <form action = "userAdministration" method="POST" >
-        <button name="unvalid" value="${targetUser.login}" type="submit">remove</button>       
+        <button name="invalid" value="${targetUser.login}" type="submit">remove</button>       
         </form> 
         <form action = "userAdministration" method="POST" >
         <button name="valid" value="${targetUser.login}" type="submit">set</button>       

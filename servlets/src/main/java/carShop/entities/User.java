@@ -19,8 +19,8 @@ public class User {
 	 
 	private boolean valid;
 	
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-	public List<UserOrder> userOrder = new ArrayList<UserOrder>();
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+	public List<UserOrder> userOrder = new ArrayList<UserOrder>();			// engineering duty!			
 		
 	public void setUserOrder(List<UserOrder> userOrder) {
 		this.userOrder = userOrder;
@@ -54,11 +54,6 @@ public class User {
 		return password;
 	}	
 
-	@Override
-	public String toString() {
-		return login.toString();
-	}
-
 	public boolean isAdminRights() {
 		return adminRights;
 	}
@@ -74,4 +69,25 @@ public class User {
 	public void setValid(boolean valid) {
 		this.valid = valid;
 	}	
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj==null)return false;
+		if (obj==this)return true;
+		if (obj.getClass()!= this.getClass())return false;
+		User user=(User)obj;
+		return login.equals(user.getLogin());
+	}
+	
+	@Override
+	public int hashCode() {
+		if(login==null) return 0;
+		return login.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return login;
+	}
 }

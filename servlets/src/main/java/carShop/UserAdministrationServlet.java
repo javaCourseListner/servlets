@@ -9,11 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import carShop.DAO.UserDao;
+import carShop.DAO.UserOrderDao;
 import carShop.entities.User;
+import carShop.entities.UserOrder;
 
 public class UserAdministrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserDao userDao = new UserDao();
+	private UserOrderDao userOrderDao = new UserOrderDao() ;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -21,58 +24,124 @@ public class UserAdministrationServlet extends HttpServlet {
 	}
 			
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		String parm = null;
-		
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
+		String parm = null;		
 		if((parm = req.getParameter("targetUser"))!= null){			
-			User user = userDao.getUserById(parm);
-			if(user != null){
-				req.setAttribute("targetUser", user);
-				req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);
-			}else{
-				req.getRequestDispatcher("jsp/admin/userPanel.jsp").forward(req, resp);
-			}			
+			findUser(req, resp, parm);			
 		}else if((parm = req.getParameter("targetUserList"))!= null){			
-			List<User> users = userDao.getUsers();
-			req.setAttribute("targetUserList", users);
-			req.getRequestDispatcher("jsp/admin/userList.jsp").forward(req, resp);		
+			allUsersList(req, resp);		
 		}else if((parm = req.getParameter("setAdmRts"))!= null){		
-			userDao.setAdminRights(parm);
-			User user = userDao.getUserById(parm);
-			req.setAttribute("targetUser", user);			
-			req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);		
+			setAdminRights(req, resp, parm);		
 		}else if((parm = req.getParameter("delete"))!= null){
-			userDao.deleteUser(parm);
-			req.getRequestDispatcher("jsp/admin/userPanel.jsp").forward(req, resp);
+			deleteUser(req, resp, parm);
 		}else if((parm = req.getParameter("valid"))!= null){		
-			userDao.setValidTrue(parm);
-			User user = userDao.getUserById(parm);
-			req.setAttribute("targetUser", user);			
-			req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);	
-		}else if((parm = req.getParameter("unvalid"))!= null){		
-			userDao.setValidFalse(parm);
-			User user = userDao.getUserById(parm);
-			req.setAttribute("targetUser", user);			
-			req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);	
+			validateUser(req, resp, parm);	
+		}else if((parm = req.getParameter("invalid"))!= null){		
+			invalidaeUser(req, resp, parm);	
 		}else if((parm = req.getParameter("rmvAdmRts"))!= null){		
-			userDao.removeAdminRights(parm);
-			User user = userDao.getUserById(parm);
-			req.setAttribute("targetUser", user);			
-			req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);	
-		}
+			removeAdminRights(req, resp, parm);	
+		}else if((parm = req.getParameter("admnList"))!= null){		
+			adminUsersList(req, resp);		
+		}else if((parm = req.getParameter("invldList"))!= null){		
+			invalidUsersList(req, resp);		
+		}else if((parm = req.getParameter("userOrders"))!= null){		
+			getUserOrders(req, resp, parm);
 		
+		}else if((parm = req.getParameter("dltOrder"))!= null){		
+			String userLogin = req.getParameter("user");
+			int userOrderId = Integer.parseInt(parm);
+			System.out.println(userLogin);
+			System.out.println(userOrderId);
+			
+			User user = userDao.getUserById(userLogin);			
+			req.setAttribute("targetUser", user);	
+			userOrderDao.deleteUserOrder(userOrderId);
+			List<UserOrder> list = userOrderDao.getUserOrders(userLogin);			
+			req.setAttribute("orders", list);
+			req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);
+			
+		}
 	}
-	
-	
-	
+
+	private void getUserOrders(HttpServletRequest req,
+			HttpServletResponse resp, String parm) throws ServletException,
+			IOException {
+		User user = userDao.getUserById(parm);
+		req.setAttribute("targetUser", user);	
+		List<UserOrder> list = userOrderDao.getUserOrders(parm);			
+		req.setAttribute("orders", list);
+		req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);
+	}
 
 	
 	
-	
-	
-	
-	
-	
-	
+	private void deleteUser(HttpServletRequest req, HttpServletResponse resp,
+			String parm) throws ServletException, IOException {
+		userDao.deleteUser(parm);
+		req.getRequestDispatcher("jsp/admin/userPanel.jsp").forward(req, resp);
+	}
+
+	private void invalidUsersList(HttpServletRequest req,
+			HttpServletResponse resp) throws ServletException, IOException {
+		List<User> users = userDao.getInvalidUsers();
+		req.setAttribute("targetUserList", users);
+		req.getRequestDispatcher("jsp/admin/userList.jsp").forward(req, resp);
+	}
+
+	private void adminUsersList(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		List<User> users = userDao.getAdminUsers();
+		req.setAttribute("targetUserList", users);
+		req.getRequestDispatcher("jsp/admin/userList.jsp").forward(req, resp);
+	}
+
+	private void removeAdminRights(HttpServletRequest req,
+			HttpServletResponse resp, String parm) throws ServletException, IOException {
+		userDao.removeAdminRights(parm);
+		User user = userDao.getUserById(parm);
+		req.setAttribute("targetUser", user);			
+		req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);
+	}
+
+	private void invalidaeUser(HttpServletRequest req,
+			HttpServletResponse resp, String parm) throws ServletException, IOException {
+		userDao.setValidFalse(parm);
+		User user = userDao.getUserById(parm);
+		req.setAttribute("targetUser", user);			
+		req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);
+	}
+
+	private void validateUser(HttpServletRequest req, HttpServletResponse resp,
+			String parm) throws ServletException, IOException {
+		userDao.setValidTrue(parm);
+		User user = userDao.getUserById(parm);
+		req.setAttribute("targetUser", user);			
+		req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);
+	}
+
+	private void setAdminRights(HttpServletRequest req,
+			HttpServletResponse resp, String parm) throws ServletException,IOException {
+		userDao.setAdminRights(parm);
+		User user = userDao.getUserById(parm);
+		req.setAttribute("targetUser", user);			
+		req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);
+	}
+
+	private void allUsersList(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		List<User> users = userDao.getUsers();
+		req.setAttribute("targetUserList", users);
+		req.getRequestDispatcher("jsp/admin/userList.jsp").forward(req, resp);
+	}
+
+	private void findUser(HttpServletRequest req, 
+			HttpServletResponse resp, String parm) throws ServletException, IOException {
+		User user = userDao.getUserById(parm);
+		if(user != null){
+			req.setAttribute("targetUser", user);
+			req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);
+		}else{
+			req.getRequestDispatcher("jsp/admin/userPanel.jsp").forward(req, resp);
+		}
+	}	
 }

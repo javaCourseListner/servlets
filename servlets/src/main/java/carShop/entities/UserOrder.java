@@ -40,7 +40,12 @@ public class UserOrder {
 		this.user = user;
 		this.date = date;
 	}
-
+	
+	public UserOrder(Car car, Date date) {
+		this.car = car;
+		this.date = date;
+	}
+	
 	public int getUserOrderId() {
 		return userOrderId;
 	}

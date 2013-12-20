@@ -9,7 +9,19 @@
 </head>
     <body> 
        <form action = "userAdministration" method="GET" >
-       To previous page: <button type="submit">back</button></form>
+       Previous page: <button type="submit">back</button></form>
+         
+	    <form action = "userAdministration" method="POST" >
+	     <button name="targetUserList" value="list"  type="submit">all</button>        
+	    </form>   
+	   
+	    <form action = "userAdministration" method="POST" >
+	     <button name="invldList" value="list"  type="submit">invalid</button>       
+	    </form>
+	   
+	    <form action = "userAdministration" method="POST" >
+	    <button name="admnList" value="list"  type="submit">admin</button>        
+	    </form>    
            
       <c:forEach var="targetUser" items="${targetUserList}"> 
         <br><b>Login:</b> ${targetUser.login}        

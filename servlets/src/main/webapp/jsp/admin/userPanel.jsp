@@ -9,13 +9,15 @@
 </head>
     <body> 
      <form action = "welcomePage" method="GET" >
-     To general panel: <button type="submit">back</button></form>
+     <br> To general panel: <button type="submit">back</button></form>
+   
+    <form action = "userAdministration" method="POST" >
+     <br> Input login of user you want to find:<input type = "submit" value="find" /> 
+     <input type = "text" name = "targetUser" size="15" maxlength="8"/>
+    </form>
     
     <form action = "userAdministration" method="POST" >
-      <pre> Input login of user you want to find:<input type = "text" name = "targetUser" size="15" maxlength="8"/><input type = "submit" value="find" /></pre>        
-    </form>  
-    <form action = "userAdministration" method="POST" >
-      <pre> Click to see all users:  <button name="targetUserList" value="list"  type="submit">list</button></pre>        
-    </form>                                
+     <br>  Click to see all users:  <button name="targetUserList" value="list"  type="submit">list</button>        
+    </form>                                  
     </body>
 </html>

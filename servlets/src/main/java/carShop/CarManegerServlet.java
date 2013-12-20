@@ -22,29 +22,24 @@ public class CarManegerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private CarDao carDao =  new CarDao();
 	private UserOrderDao userOrderDao =  new UserOrderDao();
-	
-	
+		
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{		
 		List<Car> listItem = carDao.getCars();
 		req.getServletContext().setAttribute("cars",listItem);
-		req.getRequestDispatcher("jsp/user/carList.jsp").forward(req, resp);;
+		req.getRequestDispatcher("jsp/user/carList.jsp").forward(req, resp);
 	}
-	
-	
+		
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {		
-	
-		String carToLook = req.getParameter("carToLook");
-		String carToBuy = req.getParameter("carToBuy");
-			
-		if(carToLook !=null){	
-			int id = Integer.parseInt(carToLook);		
+		String parm = null;			
+		if((parm=req.getParameter("carToLook"))!=null){	
+			int id = Integer.parseInt(parm);		
 			Car car = carDao.getCarById(id);
-			req.getServletContext().setAttribute("car",car);
+			req.setAttribute("car",car);
 			req.getRequestDispatcher("jsp/user/car.jsp").forward(req, resp);	
-		}else if (carToBuy != null){	
-			orderRegistration(req, carToBuy);			
+		}else if((parm=req.getParameter("carToBuy"))!=null){	
+			orderRegistration(req, parm);			
 			resp.sendRedirect("personalPage");
 		}		
 	}	
@@ -62,8 +57,9 @@ public class CarManegerServlet extends HttpServlet {
 		ls.add(userOrder);
 		
 		@SuppressWarnings("unchecked")								
-		List<Car> bucket = (List<Car>)session.getAttribute("bucket");
-		bucket.add(car);
-	}
+		List<UserOrder> bucket = (List<UserOrder>)session.getAttribute("bucket");		
+		userOrder.setUser(null);                         // We use "bucket" as container for cars and date,
+		bucket.add(userOrder);		                     // that's why we don't need to keep reference on User
+	}								   
 		
 }
