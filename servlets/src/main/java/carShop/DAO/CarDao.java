@@ -78,14 +78,27 @@ public class CarDao implements Dao{
 	
 	public Car getCarById(int id){					
 		EntityManager em = factory.createEntityManager();
-		return em.find(Car.class, id);
+		Car car = null;
+		try{	
+			car = em.find(Car.class, id);
+		
+		}finally{
+			em.close();
+		}
+		return car;
 	}
 	
 	public void setCar(Car car){		
 		EntityManager em = factory.createEntityManager();
-		em.getTransaction().begin();
-		em.persist(car);
-		em.getTransaction().commit();
+		try{	
+			em.getTransaction().begin();
+			em.persist(car);
+			em.getTransaction().commit();
+		}catch(Exception e){
+			em.getTransaction().rollback();
+		}finally{
+			em.close();
+		}	
 	}
 
 	

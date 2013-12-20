@@ -14,34 +14,51 @@ import carShop.entities.Car;
 import carShop.entities.UserOrder;
 
 public class UserOrderDao implements Dao{	
-					
-	
+						
 	public void setUserOrder(UserOrder userOrder){		
 		EntityManager em = factory.createEntityManager();
-		em.getTransaction().begin();
-		em.persist(userOrder);
-		em.getTransaction().commit();
+		try{	
+			em.getTransaction().begin();
+			em.persist(userOrder);
+			em.getTransaction().commit();
+		}catch(Exception e){
+			em.getTransaction().rollback();
+		}finally{
+			em.close();
+		}
 	}
 		
-	public void deleteUserOrder(int id){		
+	public void deleteUserOrder(int id){				
 		EntityManager em = factory.createEntityManager();
-		em.getTransaction().begin();
-		UserOrder userOrder = em.getReference(UserOrder.class, id);
-		em.remove(userOrder);
-		em.getTransaction().commit();
+		try{	
+			em.getTransaction().begin();
+			UserOrder userOrder = em.getReference(UserOrder.class, id);
+			em.remove(userOrder);
+			em.getTransaction().commit();
+		}catch(Exception e){
+			em.getTransaction().rollback();
+		}finally{
+			em.close();
+		}
 	}
 
 	public UserOrder getUserOrderById(int id) {
 		EntityManager em = factory.createEntityManager();
-		return em.find(UserOrder.class, id);
+		UserOrder userOrder = null;
+		try{
+			userOrder =	em.find(UserOrder.class, id);
+		}finally{
+			em.close();
+		}
+		return userOrder;
 	}
 	
 	public List<Car> getUserOrderCars(String login){		
 		EntityManager em = factory.createEntityManager();
 		TypedQuery<Car> query = em.createQuery(
 		                "SELECT c FROM Car c, UserOrder u "
-					   +"WHERE c.carId=u.car.carId "
-					   +"AND u.user.login=:login", Car.class);						
+					  + "WHERE c.carId=u.car.carId "
+					  + "AND u.user.login=:login", Car.class);						
 		query.setParameter("login",login);
 		List<Car> listItem=null;
 		try {
@@ -57,8 +74,8 @@ public class UserOrderDao implements Dao{
 		EntityManager em = factory.createEntityManager();
 		TypedQuery<Long> query = em.createQuery(
 		               "SELECT SUM(c.price) FROM Car c, UserOrder u "
-					  +"WHERE c.carId=u.car.carId "
-					  +"AND u.user.login=:login", Long.class);						
+					 + "WHERE c.carId=u.car.carId "
+					 + "AND u.user.login=:login", Long.class);						
 		query.setParameter("login",login);
 		Long i =null;
 		try {

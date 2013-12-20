@@ -13,16 +13,19 @@ import carShop.entities.UserOrder;
 
 public class RemoveTest {
 
+	private static UserDao userDao = new UserDao();
+	private static CarDao carDao = new CarDao();
+	
 	
 	@Test
-	public void removeTest(){
-		UserDao ud=new UserDao();
-		CarDao cd=new CarDao();
-		UserOrderDao uod = new UserOrderDao();
-		
-uod.deleteUserOrder(1);
-		
-		
+	public void ValidTest(){
+		String login = "testUser";
+		User toSet = new User(login, "password", null);
+		userDao.setUser(toSet);
+		userDao.setValidTrue(login);
+		User get = userDao.getUserById(login);
+		System.out.println(get.isValid());
+//		userDao.deleteUser(login);
 //		cd.setCar(new Car("ostin","red",new Options(true,true,false),64645));	
 //		cd.setCar(new Car("BMW","blue",new Options(false,true,false),645564));
 //		cd.setCar(new Car("Merss","black",new Options(true,true,true),5555));			
