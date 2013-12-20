@@ -23,13 +23,25 @@ public class UserOrderDao implements Dao{
 		em.getTransaction().commit();
 	}
 		
+	public void deleteUserOrder(int id){		
+		EntityManager em = factory.createEntityManager();
+		em.getTransaction().begin();
+		UserOrder userOrder = em.getReference(UserOrder.class, id);
+		em.remove(userOrder);
+		em.getTransaction().commit();
+	}
+
+	public UserOrder getUserOrderById(int id) {
+		EntityManager em = factory.createEntityManager();
+		return em.find(UserOrder.class, id);
+	}
+	
 	public List<Car> getUserOrderCars(String login){		
 		EntityManager em = factory.createEntityManager();
-		TypedQuery<Car> query = 
-		em.createQuery(" SELECT c FROM Car c, UserOrder u "
-					  +" WHERE c.carId=u.car.carId"
-					  +" AND u.user.login=:login", Car.class);				
-		
+		TypedQuery<Car> query = em.createQuery(
+		                "SELECT c FROM Car c, UserOrder u "
+					   +"WHERE c.carId=u.car.carId "
+					   +"AND u.user.login=:login", Car.class);						
 		query.setParameter("login",login);
 		List<Car> listItem=null;
 		try {
@@ -43,10 +55,10 @@ public class UserOrderDao implements Dao{
 	
 	public Long getOrdersAmount(String login){		
 		EntityManager em = factory.createEntityManager();
-		TypedQuery<Long> query = 
-		em.createQuery(" SELECT SUM(c.price) FROM Car c, UserOrder u "
-					  +" WHERE c.carId=u.car.carId"
-					  +" AND u.user.login=:login", Long.class);						
+		TypedQuery<Long> query = em.createQuery(
+		               "SELECT SUM(c.price) FROM Car c, UserOrder u "
+					  +"WHERE c.carId=u.car.carId "
+					  +"AND u.user.login=:login", Long.class);						
 		query.setParameter("login",login);
 		Long i =null;
 		try {
@@ -60,17 +72,16 @@ public class UserOrderDao implements Dao{
 	
 	public Map<String,Long> getSumGroupByMounth(String login){		
 		EntityManager em = factory.createEntityManager();
-		Query query = 
-		em.createQuery("SELECT month(u.date), sum(c.price) FROM Car c, UserOrder u "
-		  		     + "WHERE c.carId=u.car.carId AND "
-		  		     + "u.user.login=:login "
+		Query query = em.createQuery(
+		               "SELECT month(u.date), sum(c.price) FROM Car c, UserOrder u "
+		  		     + "WHERE c.carId=u.car.carId AND u.user.login=:login "		  		     
 				     + "GROUP BY month(u.date)");					
-		query.setParameter("login", login);
-		List<?> list =null;
+		query.setParameter("login", login);									
+		List<?> list = null;										
 		try {
 			 list = query.getResultList();
-		}finally{
-			em.close();														
+		}finally{													//only for hibernate provider, for other					
+			em.close();												//use getSumGroupByMounthNative()			
 		}																																//			
 		Map<String,Long> map = new TreeMap<String,Long>();
 			for(Object obj: list){
@@ -84,4 +95,5 @@ public class UserOrderDao implements Dao{
 			}						
 		return map;
 	}
+	
 }

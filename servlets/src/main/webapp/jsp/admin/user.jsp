@@ -8,24 +8,24 @@
 <title>User</title>
 </head>
     <body> 
-       <form action = "adminPage" method="GET" >
-       To previous page: <button type="submit">back</button></form>
+       <form action = "userAdministration" method="GET" >
+       To control panel: <button type="submit">back</button></form>
        
             <br><b>Login:</b> ${targetUser.login}        
             <br><b>Is valid:</b> ${targetUser.valid} 
             <br><b>Has admin rights:</b> ${targetUser.adminRights}                       
             <br>        
           
-        <br><form action = "adminPage" method="POST" >
-         Delete: <button name="deleteUser" value="${targetUser.login}" type="submit">click</button>       
+        <br><form action = "userAdministration" method="POST" >
+         Delete: <button name="delete" value="${targetUser.login}" type="submit">click</button>       
         </form>  
         
-        <br><form action = "adminPage" method="POST" >
-         Validate : <button name="makeValidUser" value="${targetUser.login}" type="submit">click</button>       
+        <br><form action = "userAdministration" method="POST" >
+         Validate : <button name="validate" value="${targetUser.login}" type="submit">click</button>       
         </form>  
 
-        <br><form action = "adminPage" method="POST" >
-         Give admin rights: <button name="makeAdminUser" value="${targetUser.login}" type="submit">click</button>       
+        <br><form action = "userAdministration" method="POST" >
+         Give admin rights: <button name="adminRights" value="${targetUser.login}" type="submit">click</button>       
         </form> 
 
 </body>

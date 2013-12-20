@@ -2,25 +2,22 @@ package carShop;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import carShop.DAO.UserDao;
 import carShop.entities.User;
 
-public class AdministrationServlet extends HttpServlet {
-
+public class CarAdministrationServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private UserDao userDao = new UserDao();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("adminPage.jsp").forward(req, resp);;	
+		req.getRequestDispatcher("jsp/admin/carPanel.jsp").forward(req, resp);;	
 	}
 	
 	
@@ -52,20 +49,7 @@ public class AdministrationServlet extends HttpServlet {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//	private void orderRegistration(HttpServletRequest req){			 																				
+//	private void orderRegistration(HttpServletRequest req){			 																				
 //	User user = (User) req.getSession().getAttribute("user");
 //	EntitiesManeger  entitiesManeger  = (EntitiesManeger) getServletContext().getAttribute("entitiesManeger");
 //	String model = req.getParameter("model");									
@@ -88,4 +72,6 @@ public class AdministrationServlet extends HttpServlet {
 	
 	
 	
-	}
+	
+	
+}

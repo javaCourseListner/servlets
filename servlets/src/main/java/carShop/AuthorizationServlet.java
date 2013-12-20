@@ -30,7 +30,12 @@ public class AuthorizationServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
 		if(req.getSession(false) != null){
-			req.getRequestDispatcher("jsp/user/welcomePage.jsp").forward(req, resp);				
+			HttpSession session =req.getSession();
+			User user = (User) session.getAttribute("user");
+			if(user.isAdminRights()){
+				req.getRequestDispatcher("jsp/admin/generalPanel.jsp").forward(req, resp);	
+			}else{
+				req.getRequestDispatcher("jsp/user/welcomePage.jsp").forward(req, resp);}
 		}else{
 			req.getRequestDispatcher("guestWelcomePage.html").forward(req, resp);
 		}
@@ -62,7 +67,7 @@ public class AuthorizationServlet extends HttpServlet{
 		}else if(isValidSuperUser(passwordHash, user)){
 			 HttpSession session = req.getSession(true);
 			 session.setAttribute("user",user);
-			 resp.sendRedirect("adminPage");			
+			 req.getRequestDispatcher("jsp/admin/generalPanel.jsp").forward(req, resp);;			
 		}else if(isValidUser(passwordHash, user)){				
 			 HttpSession session = req.getSession(true);
 			 session.setAttribute("user",user);			
@@ -81,6 +86,11 @@ public class AuthorizationServlet extends HttpServlet{
 		}
 	}
 
+	
+	
+	
+	
+	
 	
 	private boolean isAuthInputValid(String authInpt){
 		if(authInpt == null)return false;

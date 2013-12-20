@@ -6,19 +6,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Admin page</title>
 </head>
-<body>
-    <h3> Admin page </h3>  
-    <form action = "adminPage" method="POST" >
-      <pre> Input login of user you want to find:<input type = "text" name = "targetUser" size="15" maxlength="8"/><input type = "submit" value="find" /></pre>        
-    </form>  
-    <form action = "adminPage" method="POST" >
-      <pre> Click to see all users:  <button name="targetUserList" value="list"  type="submit">list</button></pre>        
-    </form>  
-    <form action = "adminPage" method="POST" >
-       <pre> Input you model of car want to find:<input type = "text" name = "targetCar" size="15" maxlength="8"/><input type = "submit" value="find" /></pre>          
-    </form>     
-    <form action = "adminPage" method="POST" >
-      <pre> Click to see all models:  <button name="cars" value="list"  type="submit">list</button></pre>        
-    </form>    
+<body> 
+        <h3> You are welcome ${user.login} </h3>
+        <form action="carAdministration" method="GET">
+        Car administration panel: <input type="submit" value="click"></form>
+        <br>
+        <form action="userAdministration" method="GET">
+        User administration panel: <input type="submit" value="click"></form>  
+        <br>
+        <form action="logout" method="GET">
+        To logout click  here: <input type="submit" value="logout"></form>     
 </body>
 </html>

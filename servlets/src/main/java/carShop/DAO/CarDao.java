@@ -2,6 +2,7 @@ package carShop.DAO;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -17,8 +18,19 @@ public class CarDao implements Dao{
 
 
 	
-	public static void main(String[] args) {			
-		
+			
+		public static void main(String[] args) {
+//			UserDao ud=new UserDao();
+//			CarDao cd=new CarDao();
+//			UserOrderDao uod = new UserOrderDao();
+//
+//		ud.deleteUser("adik");
+		  // ud.setUser(new User("adik","adik",null));				
+//			User user = ud.getUserById("adik");		
+//			Car car = cd.getCarById(1);		
+//			uod.setUserOrder(new UserOrder(car, user, new Date()));	
+//			uod.deleteUserOrder(6);
+		}
 //		List<Car> listItem = new CarDao().getCars();
 //		if(listItem != null){
 //			for(Car i:listItem){
@@ -51,24 +63,18 @@ public class CarDao implements Dao{
 //cd.getSumGroup("a");
 //for(Car car:cd.getCars())System.out.println(car);
  
-for(User u: new UserDao().getUsers())System.out.println(u);
-//System.out.println(od.getSumGroupByMounth("wd"));
+//for(User u: new UserDao().getUsers())System.out.println(u);
+////System.out.println(od.getSumGroupByMounth("wd"));
+//	
 	
 	
-	}
 	
 	
-	public User getUserById(String login){					
+
+	
+	public Car getCarById(int id){					
 		EntityManager em = factory.createEntityManager();
-		return em.find(User.class, login);
-	}
-	
-	
-	public void setUser(User user){		
-		EntityManager em = factory.createEntityManager();
-		em.getTransaction().begin();
-		em.persist(user);
-		em.getTransaction().commit();
+		return em.find(Car.class, id);
 	}
 	
 	public void setCar(Car car){		
@@ -78,19 +84,6 @@ for(User u: new UserDao().getUsers())System.out.println(u);
 		em.getTransaction().commit();
 	}
 
-	public void setUserOrder(UserOrder userOrder){		
-		EntityManager em = factory.createEntityManager();
-		em.getTransaction().begin();
-		em.persist(userOrder);
-		em.getTransaction().commit();
-	}
-	
-	
-	public Car getCarById(int id){					
-		EntityManager em = factory.createEntityManager();
-		return em.find(Car.class, id);
-	}
-	
 	
 	public List<Car> getCars(){		
 		EntityManager em = factory.createEntityManager();
@@ -103,73 +96,5 @@ for(User u: new UserDao().getUsers())System.out.println(u);
 		}																																//
 		return listItem;
 	}
-
-	public List<Car> getUserOrderCars(String login){		
-		EntityManager em = factory.createEntityManager();
 		
-		TypedQuery<Car> query = 
-		em.createQuery(" SELECT c FROM Car c, UserOrder u "
-					  +" WHERE c.carId=u.car.carId"
-					  +" AND u.user.login=:login", Car.class);				
-		
-		query.setParameter("login",login);
-		List<Car> listItem=null;
-		try {
-			listItem=query.getResultList();
-		}finally{
-			em.close();														
-		}																																//
-		return listItem;
-	}
-
-	public Long getOrdersAmount(String login){		
-		EntityManager em = factory.createEntityManager();
-		TypedQuery<Long> query = 
-		em.createQuery(" SELECT SUM(c.price) FROM Car c, UserOrder u "
-					  +" WHERE c.carId=u.car.carId"
-					  +" AND u.user.login=:login", Long.class);						
-		query.setParameter("login",login);
-		Long i =null;
-		try {
-			 i = query.getSingleResult();
-		}finally{
-			em.close();														
-		}																																//
-		return i;
-	}
-	
-	
-	
-	
-//	TypedQuery<Integer> query = 
-//	em.createQuery(" SELECT o.order_header_id FROM order_header o, customer c "
-//				  +" WHERE c.customer_id=o.customer_id.customer_id"
-//				  +" AND c.customer_name='Customer1'",Integer.class);		
-//	List<Integer> listM=null;
-//	try {
-//		listM=query.getResultList();
-//	}finally{
-//		em.close();													
-//	}																	
-//	if(listM != null){
-//		for(Integer i:listM){
-//			System.out.println(i.toString());
-//		}
-
-//	TypedQuery<Integer> query = 
-//	em.createQuery(" SELECT o.order_header_id FROM order_header o, customer c "
-//				  +" WHERE c.customer_id=o.customer_id.customer_id"
-//				  +" AND c.customer_name='Customer1'",Integer.class);		
-//	List<Integer> listM=null;
-//	try {
-//		listM=query.getResultList();
-//	}finally{
-//		em.close();													
-//	}																	
-//	if(listM != null){
-//		for(Integer i:listM){
-//			System.out.println(i.toString());
-//		}
-
-	
 }

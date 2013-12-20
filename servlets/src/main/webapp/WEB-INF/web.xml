@@ -10,6 +10,23 @@
   
   <display-name>Archetype Created Web Application</display-name>
   
+  
+  
+    <servlet>
+    <servlet-name>CarAdministrationServlet</servlet-name>
+    <servlet-class>carShop.CarAdministrationServlet</servlet-class>
+  </servlet>
+    
+    <servlet>
+    <servlet-name>UserAdministrationServlet</servlet-name>
+    <servlet-class>carShop.UserAdministrationServlet</servlet-class>
+  </servlet>
+  
+  
+  
+  
+  
+  
    <servlet>
     <servlet-name>authorizationServlet</servlet-name>
     <servlet-class>carShop.AuthorizationServlet</servlet-class>
@@ -53,8 +70,14 @@
   </servlet-mapping>
 
     <servlet-mapping>
-    <servlet-name>adminServlet</servlet-name>
-    <url-pattern>/adminPage</url-pattern>
+    <servlet-name>UserAdministrationServlet</servlet-name>
+    <url-pattern>/userAdministration</url-pattern>
+  </servlet-mapping>
+  
+  
+      <servlet-mapping>
+    <servlet-name>CarAdministrationServlet</servlet-name>
+    <url-pattern>/carAdministration</url-pattern>
   </servlet-mapping>
   
   

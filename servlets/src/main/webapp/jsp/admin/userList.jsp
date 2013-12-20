@@ -8,12 +8,12 @@
 <title>Car List</title>
 </head>
     <body> 
-       <form action = "adminPage" method="GET" >
+       <form action = "userAdministration" method="GET" >
        To previous page: <button type="submit">back</button></form>
            
       <c:forEach var="targetUser" items="${targetUserList}"> 
         <br><b>Login:</b> ${targetUser.login}        
-        <form action = "adminPage" method="POST" >
+        <form action = "userAdministration" method="POST" >
          Get him: <button name="targetUser" value="${targetUser.login}" type="submit">click</button>       
         <br>
         </form>         

@@ -7,6 +7,7 @@ import javax.persistence.TypedQuery;
 
 import carShop.entities.User;
 
+
 public class UserDao implements Dao{
 	
 	
@@ -23,6 +24,13 @@ public class UserDao implements Dao{
 		em.getTransaction().commit();
 	}
 
+	public void deleteUser(String login){		
+		EntityManager em = factory.createEntityManager();
+		em.getTransaction().begin();
+	    User user = em.getReference(User.class, login);
+		em.remove(user);
+		em.getTransaction().commit();
+	}
 	
 	public List<User> getUsers(){		
 		EntityManager em = factory.createEntityManager();
@@ -36,4 +44,6 @@ public class UserDao implements Dao{
 		return listItem;
 	}
 
+
+	
 }

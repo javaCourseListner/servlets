@@ -9,7 +9,7 @@
 </head>
 	<body>              	
 		<h3> You are welcome ${user.login} </h3>
-		<form action="clientPersonalPage.jsp" method="GET">
+		<form action="personalPage" method="GET">
 		Your personal page here: <input type="submit" value="get it)"></form>
 		<br>
 		<form action="carManeger" method="GET">

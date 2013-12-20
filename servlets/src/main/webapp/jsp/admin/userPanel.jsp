@@ -8,6 +8,14 @@
 <title>User Panel</title>
 </head>
     <body> 
-                                       
+     <form action = "welcomePage" method="GET" >
+     To general panel: <button type="submit">back</button></form>
+    
+    <form action = "userAdministration" method="POST" >
+      <pre> Input login of user you want to find:<input type = "text" name = "targetUser" size="15" maxlength="8"/><input type = "submit" value="find" /></pre>        
+    </form>  
+    <form action = "userAdministration" method="POST" >
+      <pre> Click to see all users:  <button name="targetUserList" value="list"  type="submit">list</button></pre>        
+    </form>                                
     </body>
 </html>
