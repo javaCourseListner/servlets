@@ -1,4 +1,3 @@
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -19,8 +18,8 @@ public class UserDaoTest {
 	@Test	
 	public void createAdmin(){
 		
-		userDao.deleteUser("kiki");	
-		User usTo = new User("kiki", getHash("kiki"), null);
+		userDao.deleteUser("admin");	
+		User usTo = new User("admin", getHash("admin"), null);
 		usTo.setAdminRights(true);
 		userDao.setUser(usTo);
 	}
