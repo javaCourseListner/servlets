@@ -55,7 +55,7 @@ public class CarDao implements Dao{
 	public List<Car> getUnorderedCars() {
 		EntityManager em = factory.createEntityManager();
 		TypedQuery<Car> query = em.createQuery(
-									"SELECT c FROM Car c "
+								    "SELECT c FROM Car c "
 								  + "WHERE c.carId NOT IN"
 								  + "(SELECT u.car.carId from UserOrder u)",Car.class);
 		List<Car> listItem=new LinkedList<Car>();
@@ -103,7 +103,7 @@ public class CarDao implements Dao{
 	public List<Car> getCarsByModel(String model){		
 		EntityManager em = factory.createEntityManager();
 		TypedQuery<Car> query = em.createQuery(
-									"SELECT c FROM Car c "
+								    "SELECT c FROM Car c "
 								  + "WHERE c.model=:model",Car.class);
 		query.setParameter("model", model);
 		List<Car> listItem=new LinkedList<Car>();
@@ -119,7 +119,7 @@ public class CarDao implements Dao{
 	public List<Car> getCarsByColor(String color){		
 		EntityManager em = factory.createEntityManager();
 		TypedQuery<Car> query = em.createQuery(
-									"SELECT c FROM Car c "
+								    "SELECT c FROM Car c "
 								  + "WHERE c.model=:color",Car.class);
 		query.setParameter("color", color);
 		List<Car> listItem=new LinkedList<Car>();
@@ -154,7 +154,7 @@ public class CarDao implements Dao{
 	public long getCountOrdersOnCar(int id) {
 		EntityManager em = factory.createEntityManager();
 		TypedQuery<Long> query = em.createQuery( 
-			                "SELECT COUNT(u) FROM UserOrder u "
+			                	    "SELECT COUNT(u) FROM UserOrder u "
 						  + "WHERE u.car.carId=:carId ",Long.class);						
 		query.setParameter("carId",id);
 		long count = 0;
