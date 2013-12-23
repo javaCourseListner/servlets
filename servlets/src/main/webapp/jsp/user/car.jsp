@@ -9,7 +9,7 @@
 </head>
     <body>        
 	       <form action = "carManeger" method="GET" >
-	       To previous page: <button type="submit">back</button></form>  
+	       To welcome page: <button type="submit">back</button></form>  
 	       
 	       <br><b>Car:</b> ${car.model} 
 	       <br><b>Color:</b> ${car.color}  

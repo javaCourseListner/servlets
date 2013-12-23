@@ -23,7 +23,7 @@ public class Car implements Serializable{
 	
 	private int price;
 
-	
+	@Lob
 	private String description;
 	
 	

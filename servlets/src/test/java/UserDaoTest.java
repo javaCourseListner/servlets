@@ -16,14 +16,14 @@ public class UserDaoTest {
 	private static String login2 = "testUser2";
 	
 	
-//	@Test	
-//	public void createAdmin(){
-//		
-//		userDao.deleteUser("kiki");	
-//		User usTo = new User("kiki", getHash("kiki"), null);
-//		usTo.setAdminRights(true);
-//		userDao.setUser(usTo);
-//	}
+	@Test	
+	public void createAdmin(){
+		
+		userDao.deleteUser("kiki");	
+		User usTo = new User("kiki", getHash("kiki"), null);
+		usTo.setAdminRights(true);
+		userDao.setUser(usTo);
+	}
 	
 	
 	@Test

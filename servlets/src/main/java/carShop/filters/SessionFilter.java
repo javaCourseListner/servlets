@@ -1,4 +1,4 @@
-package carShop;
+package carShop.filters;
 
 import java.io.IOException;
 import java.util.ArrayList;

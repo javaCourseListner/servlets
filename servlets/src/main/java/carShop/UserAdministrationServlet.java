@@ -59,7 +59,6 @@ public class UserAdministrationServlet extends HttpServlet {
 		userOrderDao.deleteUserOrder(userOrderId);			
 		User user = userDao.getUserById(userLogin);			
 		List<UserOrder> list = user.getUserOrder();
-		//List<UserOrder> list = userOrderDao.getUserOrders(userLogin);		// !?
 		req.setAttribute("targetUser", user);
 		req.setAttribute("orders", list);
 		req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);
@@ -70,8 +69,7 @@ public class UserAdministrationServlet extends HttpServlet {
 			IOException {
 		User user = userDao.getUserById(parm);
 		req.setAttribute("targetUser", user);	
-		List<UserOrder> list = user.getUserOrder();
-		//List<UserOrder> list = userOrderDao.getUserOrders(parm);		
+		List<UserOrder> list = user.getUserOrder();	
 		req.setAttribute("orders", list);
 		req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);
 	}

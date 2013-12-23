@@ -9,7 +9,7 @@
 </head>
     <body> 
        <br>  <form action = "welcomePage" method="GET" >
-       To previous page: <button type="submit">back</button></form>
+       To welcome page: <button type="submit">back</button></form>
        <br> 
        <c:forEach var="car" items="${cars}">        
             <br><b>Car model:</b> ${car.model} 

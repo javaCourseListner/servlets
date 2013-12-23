@@ -21,6 +21,7 @@ public class AuthorizationServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private static UserDao userDao = new UserDao();
 	
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
 		if(req.getSession(false) != null){
@@ -43,8 +44,7 @@ public class AuthorizationServlet extends HttpServlet{
 	}
 
 	
-	private void clientAuthorisation(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
-		
+	private void clientAuthorisation(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {				
 		String login = req.getParameter("login");		
 		String password = req.getParameter("password");											
 		
