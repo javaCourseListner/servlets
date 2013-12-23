@@ -45,22 +45,23 @@ public class UserAdministrationServlet extends HttpServlet {
 		}else if((parm = req.getParameter("invldList"))!= null){		
 			invalidUsersList(req, resp);		
 		}else if((parm = req.getParameter("userOrders"))!= null){		
-			getUserOrders(req, resp, parm);
-		
+			getUserOrders(req, resp, parm);	
 		}else if((parm = req.getParameter("dltOrder"))!= null){		
-			String userLogin = req.getParameter("user");
-			int userOrderId = Integer.parseInt(parm);
-			System.out.println(userLogin);
-			System.out.println(userOrderId);
-			
-			User user = userDao.getUserById(userLogin);			
-			req.setAttribute("targetUser", user);	
-			userOrderDao.deleteUserOrder(userOrderId);
-			List<UserOrder> list = userOrderDao.getUserOrders(userLogin);			
-			req.setAttribute("orders", list);
-			req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);
-			
+			deleteOrder(req, resp, parm);			
 		}
+	}
+
+	private void deleteOrder(HttpServletRequest req, HttpServletResponse resp,
+			String parm) throws ServletException, IOException {
+		String userLogin = req.getParameter("user");
+		int userOrderId = Integer.parseInt(parm);			
+		userOrderDao.deleteUserOrder(userOrderId);			
+		User user = userDao.getUserById(userLogin);			
+		List<UserOrder> list = user.getUserOrder();
+		//List<UserOrder> list = userOrderDao.getUserOrders(userLogin);		// !?
+		req.setAttribute("targetUser", user);
+		req.setAttribute("orders", list);
+		req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);
 	}
 
 	private void getUserOrders(HttpServletRequest req,
@@ -68,7 +69,8 @@ public class UserAdministrationServlet extends HttpServlet {
 			IOException {
 		User user = userDao.getUserById(parm);
 		req.setAttribute("targetUser", user);	
-		List<UserOrder> list = userOrderDao.getUserOrders(parm);			
+		List<UserOrder> list = user.getUserOrder();
+		//List<UserOrder> list = userOrderDao.getUserOrders(parm);		
 		req.setAttribute("orders", list);
 		req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);
 	}

@@ -1,7 +1,9 @@
 package carShop.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,13 +17,16 @@ import javax.persistence.TemporalType;
 
 
 @Entity
-public class UserOrder {
+@Cacheable
+public class UserOrder implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)		
 	private int userOrderId;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="carId")
 	private Car car;
 	

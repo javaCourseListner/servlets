@@ -8,13 +8,12 @@
 <title>Car Panel</title>
 </head>
     <body> 
-             <h3> Admin page </h3>  
-
-    <form action = "adminPage" method="POST" >
-       <pre> Input you model of car want to find:<input type = "text" name = "targetCar" size="15" maxlength="8"/><input type = "submit" value="find" /></pre>          
+    <h3> Admin page </h3>  
+    <form action = "carAdministration" method="POST" >
+       <pre> Input you model of car want to find:<input type = "text" name = "targetCarModel" size="15" maxlength="8"/><input type = "submit" value="find" /></pre>          
     </form>     
-    <form action = "adminPage" method="POST" >
-      <pre> Click to see all models:  <button name="cars" value="list"  type="submit">list</button></pre>        
+    <form action = "carAdministration" method="POST" >
+      <pre> Click to see all models:  <button name="allCars" value="list"  type="submit">list</button></pre>        
     </form>                              
     </body>
 </html>

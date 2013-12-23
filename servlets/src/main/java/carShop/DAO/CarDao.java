@@ -3,10 +3,16 @@ package carShop.DAO;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 import carShop.entities.Car;
 import carShop.entities.Options;
@@ -20,21 +26,27 @@ public class CarDao implements Dao{
 	
 			
 		public static void main(String[] args) {
-			UserDao ud=new UserDao();
-			CarDao cd=new CarDao();
-			UserOrderDao uod = new UserOrderDao();
-//
- // 		ud.deleteUser("adik");
-		  
-			User u=new User("kiki", getHash("kiki"), null);
-			u.setAdminRights(true);
-			u.setValid(true);
-			ud.setUser(u);				
+
+			CarDao cd =new CarDao();
+			cd.setCar(new Car("opel","red",new Options(true,true,false),666,"nice car"));	
+			cd.setCar(new Car("opel","red",new Options(true,true,false),666,"nice car"));
+//			List<Car> car = cd.getCarsByModel("modelForTesting");
+//			System.out.println(car.size());
+//			cd.deleteCarsByModel("modelForTesting");	
+//			car = cd.getCarsByModel("modelForTesting");
+//			System.out.println(car.size());
+			
+			//				UserOrderDao usrOrdDao = new UserOrderDao();
+//				List<UserOrder> list = usrOrdDao.getUserOrders("popo");
+//				System.out.println(list.size());
+//				UserOrder uo= list.get(1);
+//				usrOrdDao.deleteUserOrder(uo.getUserOrderId());
+						
 //			User user = ud.getUserById("adik");		
 //			Car car = cd.getCarById(1);		
 //			uod.setUserOrder(new UserOrder(car, user, new Date()));	
 		//	ud.deleteUser("kiki");
-		}
+		
 //		List<Car> listItem = new CarDao().getCars();
 //		if(listItem != null){
 //			for(Car i:listItem){
@@ -70,7 +82,7 @@ public class CarDao implements Dao{
 //for(User u: new UserDao().getUsers())System.out.println(u);
 ////System.out.println(od.getSumGroupByMounth("wd"));
 //	
-	
+}	
 	
 	
 	
@@ -87,14 +99,16 @@ public class CarDao implements Dao{
 		return car;
 	}
 	
+
 	public void setCar(Car car){		
 		EntityManager em = factory.createEntityManager();
+		EntityTransaction et = em.getTransaction();
 		try{	
-			em.getTransaction().begin();
+			et.begin();
 			em.persist(car);
-			em.getTransaction().commit();
+			et.commit();
 		}catch(Exception e){
-			em.getTransaction().rollback();
+			et.rollback();
 		}finally{
 			em.close();
 		}	
@@ -104,7 +118,7 @@ public class CarDao implements Dao{
 	public List<Car> getCars(){		
 		EntityManager em = factory.createEntityManager();
 		TypedQuery<Car> query = em.createQuery("SELECT c FROM Car c",Car.class);
-		List<Car> listItem=null;
+		List<Car> listItem=new LinkedList<Car>();
 		try {
 			listItem=query.getResultList();
 		}finally{
@@ -112,23 +126,137 @@ public class CarDao implements Dao{
 		}																																//
 		return listItem;
 	}
+		
+	
+	public void setNewPrice(int carId,int price){		
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction et = em.getTransaction();
+		try{
+			et.begin();
+		    Car car = em.getReference(Car.class, carId);
+			car.setPrice(price);
+			et.commit();
+		}catch(Exception e){
+			et.rollback();
+		}finally{
+			em.close();
+		}	
+	}
 	
 	
-	public static  String getHash(String str) {	        
-		if (str == null) return null;
-		MessageDigest md5 ;        
-	    StringBuffer  hexString = new StringBuffer();	        
-	    try {	                                    
-	    	md5 = MessageDigest.getInstance("md5");	            
-	    	md5.reset();
-	    	md5.update(str.getBytes()); 	                        	                        
-	    	byte messageDigest[] = md5.digest();	                        
-	    	for (int i = 0; i < messageDigest.length; i++) {
-	    		hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-	    	}	                                                                                        
-	    }catch (NoSuchAlgorithmException e) {                        
-	    	e.printStackTrace();
-	    }	        
-	    return hexString.toString();
-	}		
+	public void setNewDescription(int id,String description){		
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction et = em.getTransaction();
+		try{
+			et.begin();
+		    Car car = em.getReference(Car.class,id);
+			car.setDescription(description);
+			et.commit();
+		}catch(Exception e){
+			et.rollback();
+		}finally{
+			em.close();
+		}	
+	}
+
+
+	public List<Car> getCarsByModel(String model){		
+		EntityManager em = factory.createEntityManager();
+		TypedQuery<Car> query = em.createQuery(
+									"SELECT c FROM Car c "
+								  + "WHERE c.model=:model",Car.class);
+		query.setParameter("model", model);
+		List<Car> listItem=new LinkedList<Car>();
+		try {
+			listItem = query.getResultList();
+		}finally{
+			em.close();														
+		}																																//
+		return listItem;
+	}
+	
+
+	public List<Car> getCarsByColor(String color){		
+		EntityManager em = factory.createEntityManager();
+		TypedQuery<Car> query = em.createQuery(
+									"SELECT c FROM Car c "
+								  + "WHERE c.model=:color",Car.class);
+		query.setParameter("color", color);
+		List<Car> listItem=new LinkedList<Car>();
+		try {
+			listItem = query.getResultList();
+		}finally{
+			em.close();														
+		}																																//
+		return listItem;
+	}
+
+	public void deleteCarsByModel(String model){		
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction et = em.getTransaction();
+		try {
+			et.begin();
+			Query query = em.createQuery(
+								  "DELETE FROM Car c "
+								+ "WHERE c.model=:model");
+			query.setParameter("model", model);
+			query.executeUpdate();
+			et.commit();
+		}catch(Exception e){
+			et.rollback();
+		}finally{
+			em.close();														
+		}																																//
+	}
+
+
+
+
+
+	public long getCountOrdersOnCar(int id) {
+		EntityManager em = factory.createEntityManager();
+		TypedQuery<Long> query = em.createQuery( 
+		                "SELECT COUNT(u) FROM UserOrder u "
+					  + "WHERE u.car.carId=:carId ",Long.class);						
+		query.setParameter("carId",id);
+		long count = 0;
+		try {
+			count=query.getSingleResult();
+		}finally{
+			em.close();														
+		}																																//								
+		return count;	
+	}
+
+
+
+
+
+	public void deleteCarById(int carId) {
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction et = em.getTransaction();
+		try{				
+			et.begin();		
+			Car car = em.getReference(Car.class, carId);
+		    em.remove(car);
+			et.commit();
+		}catch(Exception e){
+			et.rollback();
+		}finally{
+			em.close();
+		}
+		
+	}
+
+
+	public List<Car> getUnorderedCars() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+
+
 }

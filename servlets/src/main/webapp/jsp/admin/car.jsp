@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,11 +8,63 @@
 <title>Car</title>
 </head>
 	 <body>
-	 <form action = "adminPage" method="GET" >
-	       To previous page: <input type = "submit" value="back" />    
-	       </form>             	       
-	       <br>              	        
-	       
+       
+       <form action = "carAdministration" method="GET" >
+       Previous page: <button type="submit">back</button></form>        	                    	        
+	              
+       <br><b>Car:</b> ${car.model} 
+       <br><b>Color:</b> ${car.color}  
+       <br><b>Options:</b> ${car.options}                      
+       <br><b>Price:</b> ${car.price}
+       <br><b>Description:</b> ${car.description}
+        
+	   <br><br> 	   	   	          	   
+	   
+	   <form action = "carAdministration" method="POST" >
+            <br>Update price: 
+            <input type = "submit" value="update" />  
+            <br><br><input type = "text" name = "newPrice" size="15" />
+            <input type="hidden" name = "car" value="${car.carId}">           
+       </form>  
+       
+       <br><br>
+                
+       <form action="carAdministration" method="POST">
+	        <br>Update description:
+	        <input type="submit" value="update">
+	        <br><br><textarea rows="10" cols="45" name="newDescription"></textarea>	       
+            <input type="hidden" name = "car" value="${car.carId}">  
+       </form>
+     
+       <br><br>
+       
+       <form action = "carAdministration" method="POST" >
+       Count orders on this car: <button name="countCarOrders" value="${car.carId}" type="submit">click</button>       
+       </form> 
+       ${countCarOrders}
+ 
+       <br><br>
+	   
+	   <form action = "carAdministration" method="POST" >
+        Delete: <button name="deleteCar" value="${car.carId}" type="submit">click</button>       
+       </form>  
+       *will work only if there are not orders on this car.
+	    
+	     
+<!-- 	     
+	     
+	    <c:forEach var="order" items="${orderList}">        
+           <br><b>Car model:</b> ${order.car.model} 
+           <b>Color:        </b> ${order.car.color}  
+           <b>Options:      </b> ${order.car.options}                      
+           <br><b>Price:    </b> ${order.car.price} 
+           <br><b>Date:      </b> <fmt:formatDate type="date" value="${order.date}" />           
+           <br>     
+        </c:forEach> 
+	     
+	     
+	     
+	     
 	       <c:forEach var="targetCar" items="${targetCarList}">        
 	            <br><b>Car Id:</b> ${targetCar.carId} 
 	            <br><b>Car model:</b> ${targetCar.model} 
@@ -55,5 +107,6 @@
 	            <br><label><input type = "checkbox" name = "automaticTransmission" value= "true"/> automatic transmission </label>
 	            <br><input type="reset" name="reset" value="Clean">  <input type = "submit" value="Submit"/>       
 	        </form>
+-->    
 	</body>
  </html>

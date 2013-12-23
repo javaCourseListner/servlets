@@ -17,7 +17,6 @@
         <br>        
          <form action = "carManeger" method="POST" >
          To create order: <button name="carToBuy" value="${car.carId}" type="submit">buy</button>       
-        </form>  
-              
+        </form>               
     </body>
 </html>

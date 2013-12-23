@@ -8,17 +8,17 @@
 <title>Car List</title>
 </head>
     <body> 
-       <form action = "welcomePage" method="GET" >
+       <br>  <form action = "welcomePage" method="GET" >
        To previous page: <button type="submit">back</button></form>
-       
-        <c:forEach var="car" items="${cars}">        
-            <br>Car model: ${car.model} 
-            <br>Color: ${car.color}  
-            <br>Options: ${car.options}                      
-        <br>        
-         <form action = "carManeger" method="POST" >
-         Detail Information: <button name="carToLook" value="${car.carId}"  type="submit">detail</button>       
-        </form>  
+       <br> 
+       <c:forEach var="car" items="${cars}">        
+            <br><b>Car model:</b> ${car.model} 
+            <br><b>Color:</b> ${car.color}  
+            <br><b>Options:</b> ${car.options}                                     
+            <br> <form action = "carManeger" method="POST" >
+              Detail Information: <button name="carToLook" value="${car.carId}"  type="submit">detail</button>       
+            </form>  
+            <br> 
         </c:forEach>  
-</body>
+    </body>
 </html>

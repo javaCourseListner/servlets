@@ -1,10 +1,14 @@
 package carShop.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class Options {
+public class Options implements Serializable{
 				
+	private static final long serialVersionUID = 1L;
+
 	private boolean conditioner;
 
 	private boolean hydroamplifier;

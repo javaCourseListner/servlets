@@ -9,7 +9,6 @@ import org.junit.Test;
 import carShop.DAO.UserDao;
 import carShop.entities.User;
 
-
 public class UserDaoTest {
 
 	private static UserDao userDao = new UserDao();
@@ -19,11 +18,13 @@ public class UserDaoTest {
 	
 //	@Test	
 //	public void createAdmin(){
+//		
 //		userDao.deleteUser("kiki");	
 //		User usTo = new User("kiki", getHash("kiki"), null);
 //		usTo.setAdminRights(true);
 //		userDao.setUser(usTo);
 //	}
+	
 	
 	@Test
 	public void ValidTestTrue(){

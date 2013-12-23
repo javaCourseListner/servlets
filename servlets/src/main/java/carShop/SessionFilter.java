@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
  
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -52,8 +51,3 @@ public class SessionFilter implements Filter {
         }
     }
 }
-
-
-
-
-

@@ -1,9 +1,14 @@
 package carShop.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Entity
-public class Car {
+@Cacheable
+public class Car implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
@@ -18,16 +23,19 @@ public class Car {
 	
 	private int price;
 
+	
 	private String description;
 	
-		
-	public Car(String model, String color, Options options, int price) { 
-		this.model=model;
-		this.color=color;
-		this.options=options;
-		this.price=price;
-	}
 	
+	public Car(String model, String color, Options options,
+			int price, String description) {
+		this.model = model;
+		this.color = color;
+		this.options = options;
+		this.price = price;
+		this.description = description;
+	}
+
 	public Car() { }
 	
 	

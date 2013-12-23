@@ -47,19 +47,14 @@ public class CarManegerServlet extends HttpServlet {
 	private void orderRegistration(HttpServletRequest req, String carToBuy) {
 		HttpSession session =  req.getSession();					
 		int id = Integer.parseInt(carToBuy);		
-		Car car = carDao.getCarById(id);							//	Method gets car by id from base 			
-																	//	and user from session, than create
-		User user = (User) session.getAttribute("user");			//	new userOrder and sets it to base.																
-		UserOrder userOrder = new UserOrder(car, user, new Date());	
+		Car car = carDao.getCarById(id);								//	Method gets car by id from base 			
+																		//	and user from session, than create
+		User user = (User) session.getAttribute("user");				//	new userOrder and sets it to base																
+		UserOrder userOrder = new UserOrder(car, user, new Date());		//  and session attribute "user".
 		userOrderDao.setUserOrder(userOrder);	
 		
 		List<UserOrder> ls = user.getUserOrder();
-		ls.add(userOrder);
-		
-		@SuppressWarnings("unchecked")								
-		List<UserOrder> bucket = (List<UserOrder>)session.getAttribute("bucket");		
-		userOrder.setUser(null);                         // We use "bucket" as container for cars and date,
-		bucket.add(userOrder);		                     // that's why we don't need to keep reference on User
+		ls.add(userOrder);			                     
 	}								   
 		
 }

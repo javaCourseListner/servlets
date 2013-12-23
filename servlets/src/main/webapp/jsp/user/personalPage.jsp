@@ -12,11 +12,12 @@
        To previous page:<button type="submit">back</button></form>                      
        <br> <b>YOUR ORDERS:</b>
        <br>              
-        <c:forEach var="order" items="${bucket}">        
-		   <br><b>Car model:</b> ${order.car.model} 
-		   <b>Color:        </b> ${order.car.color}  
-		   <b>Options:      </b> ${order.car.options}                      
-	       <br><b>Price:    </b> ${order.car.price} 
+        
+        <c:forEach var="order" items="${orderList}">        
+		   <br><b>Car model: </b> ${order.car.model} 
+		   <b>Color:         </b> ${order.car.color}  
+		   <b>Options:       </b> ${order.car.options}                      
+	       <br><b>Price:     </b> ${order.car.price} 
 	       <br><b>Date:      </b> <fmt:formatDate type="date" value="${order.date}" />	         
 	       <br>     
         </c:forEach>      
@@ -24,8 +25,7 @@
          <form action = "personalPage" method="POST" >
         <b> To count amount:</b> <button name="showOrdersSum" type="submit">count</button></form>                
         ${sum}                 
-	    
-	   
+	    	   
 	   <br>
 	    <form action = "personalPage" method="POST" >
 	    <b> Group by month:</b> <button name="showMonthSum" type="submit">count</button></form>                

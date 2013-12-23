@@ -3,10 +3,11 @@ package carShop.DAO;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import carShop.entities.User;
-
 
 public class UserDao implements Dao{
 		
@@ -36,13 +37,19 @@ public class UserDao implements Dao{
 
 	public void deleteUser(String login){		
 		EntityManager em = factory.createEntityManager();
-		try{	
-			em.getTransaction().begin();
-		    User user = em.getReference(User.class, login);
-			em.remove(user);
-			em.getTransaction().commit();
+		EntityTransaction et = em.getTransaction();
+		try{				
+			et.begin();
+			Query query = em.createQuery( 
+	                "DELETE FROM UserOrder u "
+				  + "WHERE u.user.login=:login");						
+			query.setParameter("login",login);
+			query.executeUpdate();		
+			User user = em.getReference(User.class, login);
+		    em.remove(user);
+			et.commit();
 		}catch(Exception e){
-			em.getTransaction().rollback();
+			et.rollback();
 		}finally{
 			em.close();
 		}		

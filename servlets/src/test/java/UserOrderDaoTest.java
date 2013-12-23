@@ -11,13 +11,18 @@ public class UserOrderDaoTest {
 	
 	UserOrderDao usrOrdDao = new UserOrderDao();
 	
+//	@Test
+//	public void getUserOrdersTest(){
+//		List<UserOrder> list = usrOrdDao.getUserOrders("lolo");
+//		System.out.println(list.size());
+//	}
+
 	@Test
-	public void getUserOrdersTest(){
+	public void deleteUserOrdersTest(){
+		usrOrdDao.deleteAllUserOrders("lolo");
 		List<UserOrder> list = usrOrdDao.getUserOrders("lolo");
 		System.out.println(list.size());
 	}
-
-
 
 
 }

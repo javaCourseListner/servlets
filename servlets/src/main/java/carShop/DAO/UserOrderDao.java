@@ -1,30 +1,34 @@
 package carShop.DAO;
 
 import java.text.DateFormatSymbols;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import carShop.entities.Car;
+
+
+
+
 import carShop.entities.UserOrder;
+
 
 public class UserOrderDao implements Dao{	
 						
 	public void setUserOrder(UserOrder userOrder){		
 		EntityManager em = factory.createEntityManager();
+		EntityTransaction et = em.getTransaction();
 		try{	
-			em.getTransaction().begin();
+			et.begin();
 			em.persist(userOrder);
-			em.getTransaction().commit();
+			et.commit();
 		}catch(Exception e){
-			em.getTransaction().rollback();
+			et.rollback();
 		}finally{
 			em.close();
 		}
@@ -32,13 +36,14 @@ public class UserOrderDao implements Dao{
 		
 	public void deleteUserOrder(int id){				
 		EntityManager em = factory.createEntityManager();
+		EntityTransaction et = em.getTransaction();
 		try{	
-			em.getTransaction().begin();
+			et .begin();
 			UserOrder userOrder = em.getReference(UserOrder.class, id);
 			em.remove(userOrder);
-			em.getTransaction().commit();
+			et .commit();
 		}catch(Exception e){
-			em.getTransaction().rollback();
+			et .rollback();
 		}finally{
 			em.close();
 		}
@@ -46,37 +51,56 @@ public class UserOrderDao implements Dao{
 
 	public UserOrder getUserOrderById(int id) {
 		EntityManager em = factory.createEntityManager();
+		EntityTransaction et = em.getTransaction();
 		UserOrder userOrder = null;
 		try{
+			et .begin();
 			userOrder =	em.find(UserOrder.class, id);
+			et .commit();
 		}finally{
 			em.close();
 		}
 		return userOrder;
 	}
 	
-	public List<UserOrder> getUserOrders(String login){		
-		EntityManager em = factory.createEntityManager();
-		TypedQuery<UserOrder> query = em.c(
-		                "SELECT u FROM UserOrder u "
-					  + "WHERE u.user.login=:login");						
-		query.setParameter("login",login);
-		List<?> list=null;
-		try {
-			list=query.getResultList();
-		}finally{
-			em.close();														
-		}																																//
-		List<UserOrder> orderList= new ArrayList<UserOrder>();
-		for(Object obj: list){
-			Object[] objArr=(Object[]) obj;
-			Date date = (Date)objArr[0];					
-			Car car = (Car)objArr[1];
-			orderList.add(new UserOrder(car,date));
-		}						
-		
-		return orderList;		
-	}
+//	public List<UserOrder> getUserOrders(String login){		
+//		EntityManager em = factory.createEntityManager();
+//		Query query = em.createQuery(
+//		                "SELECT u.date, c FROM Car c, UserOrder u "
+//					  + "WHERE c.carId=u.car.carId "
+//					  + "AND u.user.login=:login");						
+//		query.setParameter("login",login);
+//		List<?> list=null;
+//		try {
+//			list=query.getResultList();
+//		}finally{
+//			em.close();														
+//		}																																//
+//		List<UserOrder> orderList= new ArrayList<UserOrder>();
+//		for(Object obj: list){
+//			Object[] objArr=(Object[]) obj;
+//			Date date = (Date)objArr[0];					
+//			Car car = (Car)objArr[1];
+//			orderList.add(new UserOrder(car,date));
+//		}						
+//		
+//		return orderList;		
+//	}
+	
+		public List<UserOrder> getUserOrders(String login){		
+			EntityManager em = factory.createEntityManager();
+			TypedQuery<UserOrder> query = em.createQuery( 
+			                "SELECT u FROM UserOrder u "
+						  + "WHERE u.user.login=:login",UserOrder.class);						
+			query.setParameter("login",login);
+			List<UserOrder> list=null;
+			try {
+				list=query.getResultList();
+			}finally{
+				em.close();														
+			}																																//								
+			return list;		
+		}
 	
 	
 	public Long getOrdersAmount(String login){		
@@ -122,4 +146,23 @@ public class UserOrderDao implements Dao{
 		return map;
 	}
 	
+	
+	public void deleteAllUserOrders(String login){		
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction et = em.getTransaction();
+		try {
+			et.begin();
+			Query query = em.createQuery( 
+			                "DELETE FROM UserOrder u "
+						  + "WHERE u.user.login=:login");						
+			query.setParameter("login",login);
+			query.executeUpdate();
+			et.commit();
+		}catch(Exception e){
+			et.rollback();
+		}finally{			
+			em.close();														
+		}																																//								
+		
+	}
 }
