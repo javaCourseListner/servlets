@@ -23,6 +23,7 @@ public class CarManegerServlet extends HttpServlet {
 	private CarDao carDao =  new CarDao();
 	private UserOrderDao userOrderDao =  new UserOrderDao();
 		
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{		
 		List<Car> listItem = carDao.getCars();
@@ -30,6 +31,7 @@ public class CarManegerServlet extends HttpServlet {
 		req.getRequestDispatcher("jsp/user/carList.jsp").forward(req, resp);
 	}
 		
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {		
 		String parm = null;			
@@ -43,6 +45,7 @@ public class CarManegerServlet extends HttpServlet {
 			resp.sendRedirect("personalPage");
 		}		
 	}	
+	
 	
 	private void orderRegistration(HttpServletRequest req, String carToBuy) {
 		HttpSession session =  req.getSession();					

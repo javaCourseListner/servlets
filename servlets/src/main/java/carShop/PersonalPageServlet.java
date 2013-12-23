@@ -24,12 +24,11 @@ public class PersonalPageServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
 		HttpSession session =req.getSession();
 		User user = (User) session.getAttribute("user");
-		//String login = user.getLogin();	
-		//List<UserOrder> orderList = userOrderDao.getUserOrders(login);
 		List<UserOrder> orderList = user.getUserOrder();
 		req.setAttribute("orderList", orderList);
 		req.getRequestDispatcher("jsp/user/personalPage.jsp").forward(req, resp);
 	}
+	
 	
 	@Override
 	protected void doPost (HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {		
@@ -42,14 +41,12 @@ public class PersonalPageServlet extends HttpServlet{
 			Long amount = userOrderDao.getOrdersAmount(login);
 			req.setAttribute("sum", amount);	
 			List<UserOrder> orderList = user.getUserOrder();
-			//List<UserOrder> orderList = userOrderDao.getUserOrders(login);
 			req.setAttribute("orderList", orderList);
 			req.getRequestDispatcher("jsp/user/personalPage.jsp").forward(req, resp);
 		}else if(showMonthSum !=null){
 			HttpSession session =req.getSession();
 			User user = (User) session.getAttribute("user");
 			String login = user.getLogin();
-			//List<UserOrder> orderList = userOrderDao.getUserOrders(login);
 			List<UserOrder> orderList = user.getUserOrder();
 			req.setAttribute("orderList", orderList);
 			Map<String, Long> amount = userOrderDao.getSumGroupByMounth(login);
@@ -58,8 +55,6 @@ public class PersonalPageServlet extends HttpServlet{
 		}else{		
 			HttpSession session =req.getSession();
 			User user = (User) session.getAttribute("user");
-			//String login = user.getLogin();	
-			//List<UserOrder> orderList = userOrderDao.getUserOrders(login);
 			List<UserOrder> orderList = user.getUserOrder();			
 			req.setAttribute("orderList", orderList);
 			req.getRequestDispatcher("jsp/user/personalPage.jsp").forward(req, resp);			
@@ -67,13 +62,9 @@ public class PersonalPageServlet extends HttpServlet{
 	}
 	
 
-			
-	
-	
-	
 /*	
 	@SuppressWarnings("unchecked")
-	private long countAmount(HttpServletRequest req){				//fast as Ali, but without JPQL)
+	private long countAmount(HttpServletRequest req){				//fast as, but without JPQL)
 		long result = 0;										 	 
 		HttpSession session =req.getSession();
 		User user = (User) session.getAttribute("user");
@@ -84,30 +75,5 @@ public class PersonalPageServlet extends HttpServlet{
 		return result;	
 	}
 */	
-	
-	
-	
-//	private void orderRegistration(HttpServletRequest req){			 																				
-//		User user = (User) req.getSession().getAttribute("user");
-//		EntitiesManeger  entitiesManeger  = (EntitiesManeger) getServletContext().getAttribute("entitiesManeger");
-//		String model = req.getParameter("model");									
-//		if((model != null)&&(!model.equals(""))){									// According the logic order is valid if
-//			String color = req.getParameter("color");								// field "model" is not null.					
-//			Options opt = getOptionsFromRequest(req);;									
-//			Car car = new Car(model,color,opt,user);	
-//			entitiesManeger.setCar(car);
-//			user.car.add(car);	
-//		}
-//	}
-	
-//	private Options getOptionsFromRequest (HttpServletRequest req){	
-//		Options opt = new Options();
-//		if (req.getParameter("conditioner") != null)opt.setConditioner(true);
-//		if (req.getParameter("hydroamplifier")!=null)opt.setHydroamplifier(true);
-//		if (req.getParameter("automaticTransmission")!=null)opt.setAutomaticTransmission(true);
-//		return opt;
-//	}
-				
-
-	
+		
 }

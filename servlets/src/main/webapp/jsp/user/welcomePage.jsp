@@ -7,8 +7,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Authorization page</title>
 </head>
-	<body>              	
-		<h3> You are welcome ${user.login} </h3>
+	<body>              					
+		<c:choose>
+            <c:when test="${user.valid==true}">
+             <h3> You are welcome ${user.login} </h3>
+            </c:when>
+            <c:otherwise>
+            <h3>Вышла на 10 минут. </h3>
+            </c:otherwise>
+        </c:choose>
+		<br>
 		<form action="personalPage" method="GET">
 		Your personal page here: <input type="submit" value="get it)"></form>
 		<br>

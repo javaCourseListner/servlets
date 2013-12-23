@@ -107,7 +107,7 @@ public class UserOrderDao implements Dao{
 			 list = query.getResultList();
 		}finally{													//only for hibernate provider, where MONTH() 					
 			em.close();												//function is supported for other use 			
-		}															//getSumGroupByMounthNative()																
+		}															//nativeSQL																
 		Map<String,Long> map = new TreeMap<String,Long>();
 			for(Object obj: list){
 				Object[] objArr=(Object[]) obj;

@@ -25,13 +25,7 @@ public class AuthorizationServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
 		if(req.getSession(false) != null){
-			HttpSession session =req.getSession();
-			User user = (User) session.getAttribute("user");
-			if(user.isAdminRights()){
-				req.getRequestDispatcher("jsp/admin/generalPanel.jsp").forward(req, resp);	
-			}else{
-				req.getRequestDispatcher("jsp/user/welcomePage.jsp").forward(req, resp);
-			}
+			userVsAdminFork(req, resp);
 		}else{
 			req.getRequestDispatcher("guestWelcomePage.html").forward(req, resp);
 		}
@@ -67,9 +61,24 @@ public class AuthorizationServlet extends HttpServlet{
 			 req.getRequestDispatcher("jsp/user/welcomePage.jsp").forward(req, resp);
 		}else if(user == null){
 			 userRegistration(req, resp, login, passwordHash);
+		}else{
+			resp.sendRedirect("errorPage.html");
+			return;
 		}
 	}
 
+	
+	private void userVsAdminFork(HttpServletRequest req,
+			HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session =req.getSession();
+		User user = (User) session.getAttribute("user");
+		if(user.isAdminRights()){
+			req.getRequestDispatcher("jsp/admin/generalPanel.jsp").forward(req, resp);	
+		}else{
+			req.getRequestDispatcher("jsp/user/welcomePage.jsp").forward(req, resp);
+		}
+	}
+	
 	
 	private void userRegistration(HttpServletRequest req, HttpServletResponse resp, 
 			String login, String passwordHash)throws ServletException, IOException {

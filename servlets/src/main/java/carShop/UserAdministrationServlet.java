@@ -19,11 +19,13 @@ public class UserAdministrationServlet extends HttpServlet {
 	private UserDao userDao = new UserDao();
 	private UserOrderDao userOrderDao = new UserOrderDao() ;
 	
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getRequestDispatcher("jsp/admin/userPanel.jsp").forward(req, resp);;	
 	}
-			
+		
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
 		String parm = null;		
@@ -52,6 +54,7 @@ public class UserAdministrationServlet extends HttpServlet {
 		}
 	}
 
+	
 	private void deleteOrder(HttpServletRequest req, HttpServletResponse resp,
 			String parm) throws ServletException, IOException {
 		String userLogin = req.getParameter("user");
@@ -64,6 +67,7 @@ public class UserAdministrationServlet extends HttpServlet {
 		req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);
 	}
 
+	
 	private void getUserOrders(HttpServletRequest req,
 			HttpServletResponse resp, String parm) throws ServletException,
 			IOException {
@@ -74,14 +78,14 @@ public class UserAdministrationServlet extends HttpServlet {
 		req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);
 	}
 
-	
-	
+		
 	private void deleteUser(HttpServletRequest req, HttpServletResponse resp,
 			String parm) throws ServletException, IOException {
 		userDao.deleteUser(parm);
 		req.getRequestDispatcher("jsp/admin/userPanel.jsp").forward(req, resp);
 	}
 
+	
 	private void invalidUsersList(HttpServletRequest req,
 			HttpServletResponse resp) throws ServletException, IOException {
 		List<User> users = userDao.getInvalidUsers();
@@ -89,6 +93,7 @@ public class UserAdministrationServlet extends HttpServlet {
 		req.getRequestDispatcher("jsp/admin/userList.jsp").forward(req, resp);
 	}
 
+	
 	private void adminUsersList(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		List<User> users = userDao.getAdminUsers();
@@ -96,6 +101,7 @@ public class UserAdministrationServlet extends HttpServlet {
 		req.getRequestDispatcher("jsp/admin/userList.jsp").forward(req, resp);
 	}
 
+	
 	private void removeAdminRights(HttpServletRequest req,
 			HttpServletResponse resp, String parm) throws ServletException, IOException {
 		userDao.removeAdminRights(parm);
@@ -104,6 +110,7 @@ public class UserAdministrationServlet extends HttpServlet {
 		req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);
 	}
 
+	
 	private void invalidaeUser(HttpServletRequest req,
 			HttpServletResponse resp, String parm) throws ServletException, IOException {
 		userDao.setValidFalse(parm);
@@ -112,6 +119,7 @@ public class UserAdministrationServlet extends HttpServlet {
 		req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);
 	}
 
+	
 	private void validateUser(HttpServletRequest req, HttpServletResponse resp,
 			String parm) throws ServletException, IOException {
 		userDao.setValidTrue(parm);
@@ -120,6 +128,7 @@ public class UserAdministrationServlet extends HttpServlet {
 		req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);
 	}
 
+	
 	private void setAdminRights(HttpServletRequest req,
 			HttpServletResponse resp, String parm) throws ServletException,IOException {
 		userDao.setAdminRights(parm);
@@ -128,6 +137,7 @@ public class UserAdministrationServlet extends HttpServlet {
 		req.getRequestDispatcher("jsp/admin/user.jsp").forward(req, resp);
 	}
 
+	
 	private void allUsersList(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		List<User> users = userDao.getUsers();
@@ -135,6 +145,7 @@ public class UserAdministrationServlet extends HttpServlet {
 		req.getRequestDispatcher("jsp/admin/userList.jsp").forward(req, resp);
 	}
 
+	
 	private void findUser(HttpServletRequest req, 
 			HttpServletResponse resp, String parm) throws ServletException, IOException {
 		User user = userDao.getUserById(parm);

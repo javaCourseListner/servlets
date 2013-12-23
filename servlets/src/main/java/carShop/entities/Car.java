@@ -37,8 +37,7 @@ public class Car implements Serializable{
 	}
 
 	public Car() { }
-	
-	
+		
 	public String getModel() {
 		return model;
 	}

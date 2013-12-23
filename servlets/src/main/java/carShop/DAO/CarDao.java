@@ -10,9 +10,7 @@ import javax.persistence.TypedQuery;
 
 import carShop.entities.Car;
 
-
 public class CarDao implements Dao{
-
 	
 	public Car getCarById(int id){					
 		EntityManager em = factory.createEntityManager();
@@ -25,7 +23,7 @@ public class CarDao implements Dao{
 		return car;
 	}
 	
-
+	
 	public void setCar(Car car){		
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction et = em.getTransaction();
