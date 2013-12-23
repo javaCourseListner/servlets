@@ -53,7 +53,7 @@ public class UserOrderDao implements Dao{
 		UserOrder userOrder = null;
 		try{
 			et .begin();
-			userOrder =	em.find(UserOrder.class, id);
+			userOrder = em.getReference(UserOrder.class, id);
 			et .commit();
 		}finally{
 			em.close();
