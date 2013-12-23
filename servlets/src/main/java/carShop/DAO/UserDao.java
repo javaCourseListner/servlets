@@ -44,7 +44,7 @@ public class UserDao implements Dao{
 		try{				
 			et.begin();
 			Query query = em.createQuery( 
-	                "DELETE FROM UserOrder u "
+	                	    "DELETE FROM UserOrder u "
 				  + "WHERE u.user.login=:login");						
 			query.setParameter("login",login);
 			query.executeUpdate();		
@@ -139,7 +139,7 @@ public class UserDao implements Dao{
 	public List<User> getInvalidUsers(){		
 		EntityManager em = factory.createEntityManager();
 		TypedQuery<User> query = em.createQuery(
-									"SELECT u FROM User u "
+								    "SELECT u FROM User u "
 								  + "WHERE u.valid=false",User.class);
 		List<User> listItem=null;
 		try {
@@ -154,7 +154,7 @@ public class UserDao implements Dao{
 	public List<User> getAdminUsers(){		
 		EntityManager em = factory.createEntityManager();
 		TypedQuery<User> query = em.createQuery(
-									"SELECT u FROM User u "
+								    "SELECT u FROM User u "
 								  + "WHERE u.adminRights=true",User.class);
 		List<User> listItem=null;
 		try {
