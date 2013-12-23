@@ -10,7 +10,7 @@
 	 <body>
        
        <form action = "carAdministration" method="GET" >
-       Previous page: <button type="submit">back</button></form>        	                    	        
+       Car panel: <button type="submit">back</button></form>        	                    	        
 	              
        <br><b>Car:</b> ${car.model} 
        <br><b>Color:</b> ${car.color}  
@@ -23,7 +23,7 @@
 	   <form action = "carAdministration" method="POST" >
             <br>Update price: 
             <input type = "submit" value="update" />  
-            <br><br><input type = "text" name = "newPrice" size="15" />
+            <br><br><input type = "text" name = "updatePrice" size="15" />
             <input type="hidden" name = "car" value="${car.carId}">           
        </form>  
        
@@ -32,81 +32,23 @@
        <form action="carAdministration" method="POST">
 	        <br>Update description:
 	        <input type="submit" value="update">
-	        <br><br><textarea rows="10" cols="45" name="newDescription"></textarea>	       
+	        <br><br><textarea rows="10" cols="45" name="updateDescription"></textarea>	       
             <input type="hidden" name = "car" value="${car.carId}">  
        </form>
      
        <br><br>
        
        <form action = "carAdministration" method="POST" >
-       Count orders on this car: <button name="countCarOrders" value="${car.carId}" type="submit">click</button>       
+            Count orders on this car: <button name="countCarOrders" value="${car.carId}" type="submit">click</button>       
        </form> 
        ${countCarOrders}
  
        <br><br>
 	   
 	   <form action = "carAdministration" method="POST" >
-        Delete: <button name="deleteCar" value="${car.carId}" type="submit">click</button>       
+            Delete: <button name="deleteCar" value="${car.carId}" type="submit">click</button>       
        </form>  
-       *will work only if there are not orders on this car.
-	    
-	     
-<!-- 	     
-	     
-	    <c:forEach var="order" items="${orderList}">        
-           <br><b>Car model:</b> ${order.car.model} 
-           <b>Color:        </b> ${order.car.color}  
-           <b>Options:      </b> ${order.car.options}                      
-           <br><b>Price:    </b> ${order.car.price} 
-           <br><b>Date:      </b> <fmt:formatDate type="date" value="${order.date}" />           
-           <br>     
-        </c:forEach> 
-	     
-	     
-	     
-	     
-	       <c:forEach var="targetCar" items="${targetCarList}">        
-	            <br><b>Car Id:</b> ${targetCar.carId} 
-	            <br><b>Car model:</b> ${targetCar.model} 
-	            <br><b>Color:</b> ${targetCar.color}  
-	            <br><b>Options:</b> ${targetCar.options}                      
-	            <br><b>Options:</b> ${targetCar.description}
-	        <br>        
-	        </c:forEach>               
-	        <br>                     
-	        	        
-	    <br><form action = "adminPage" method="POST" >
-         Delete: <button name="deleteCar" value="${targetCar.caId}" type="submit">click</button>       
-        </form>  
-        
-        <br><form action = "adminPage" method="POST" >
-         Set price : <button name="setCarPrice" value="${targetCar.caId}" type="submit">click</button>       
-        </form>        
-	        
-		<form action="adminPage" method="POST">
-	    <br>Update description:
-	    <p><textarea rows="10" cols="45" name="updateDescrp"></textarea></p>
-	    <p><input type="submit" value="click"></p>
-	    </form>
-	        
-	        
-	        
-	        <form action = "personalPage" method="POST">       
-	            <b>COMPLETE THE FORM:</b>
-	            <br> 
-	            <br> <b>Input car model:</b> 
-	            <br> <input type = "text" name = "model" />
-	            <br> <b>Choose color:</b> 
-	            <br><label><input type = "radio" name = "color" value="red" />red</label>
-	            <br><label><input type = "radio" name = "color" value= "blue" />blue</label>
-	            <br><label><input type = "radio" name = "color" value= "green" />green</label>
-	            <br><label><input type = "radio" name = "color" value= "black" />black</label>
-	            <br><b>Select options:</b>
-	            <br><label><input type = "checkbox" name = "conditioner" value= "true"/> conditioner </label>
-	            <br><label><input type = "checkbox" name = "hydroamplifier" value= "true"/> hydroamplifier </label>
-	            <br><label><input type = "checkbox" name = "automaticTransmission" value= "true"/> automatic transmission </label>
-	            <br><input type="reset" name="reset" value="Clean">  <input type = "submit" value="Submit"/>       
-	        </form>
--->    
+       *only if there are not orders on this car.	    	     
+	
 	</body>
  </html>

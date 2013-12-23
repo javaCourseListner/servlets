@@ -11,10 +11,6 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-
-
-
-
 import carShop.entities.UserOrder;
 
 
@@ -34,6 +30,7 @@ public class UserOrderDao implements Dao{
 		}
 	}
 		
+	
 	public void deleteUserOrder(int id){				
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction et = em.getTransaction();
@@ -49,6 +46,7 @@ public class UserOrderDao implements Dao{
 		}
 	}
 
+	
 	public UserOrder getUserOrderById(int id) {
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction et = em.getTransaction();
@@ -63,44 +61,21 @@ public class UserOrderDao implements Dao{
 		return userOrder;
 	}
 	
-//	public List<UserOrder> getUserOrders(String login){		
-//		EntityManager em = factory.createEntityManager();
-//		Query query = em.createQuery(
-//		                "SELECT u.date, c FROM Car c, UserOrder u "
-//					  + "WHERE c.carId=u.car.carId "
-//					  + "AND u.user.login=:login");						
-//		query.setParameter("login",login);
-//		List<?> list=null;
-//		try {
-//			list=query.getResultList();
-//		}finally{
-//			em.close();														
-//		}																																//
-//		List<UserOrder> orderList= new ArrayList<UserOrder>();
-//		for(Object obj: list){
-//			Object[] objArr=(Object[]) obj;
-//			Date date = (Date)objArr[0];					
-//			Car car = (Car)objArr[1];
-//			orderList.add(new UserOrder(car,date));
-//		}						
-//		
-//		return orderList;		
-//	}
 	
-		public List<UserOrder> getUserOrders(String login){		
-			EntityManager em = factory.createEntityManager();
-			TypedQuery<UserOrder> query = em.createQuery( 
-			                "SELECT u FROM UserOrder u "
-						  + "WHERE u.user.login=:login",UserOrder.class);						
-			query.setParameter("login",login);
-			List<UserOrder> list=null;
-			try {
-				list=query.getResultList();
-			}finally{
-				em.close();														
-			}																																//								
-			return list;		
-		}
+	public List<UserOrder> getUserOrders(String login){		
+		EntityManager em = factory.createEntityManager();
+		TypedQuery<UserOrder> query = em.createQuery( 
+			          "SELECT u FROM UserOrder u "
+					+ "WHERE u.user.login=:login",UserOrder.class);						
+		query.setParameter("login",login);
+		List<UserOrder> list=null;
+		try {
+			list=query.getResultList();
+		}finally{
+			em.close();														
+		}																																//								
+		return list;		
+	}
 	
 	
 	public Long getOrdersAmount(String login){		
@@ -130,9 +105,9 @@ public class UserOrderDao implements Dao{
 		List<?> list = null;										
 		try {
 			 list = query.getResultList();
-		}finally{													//only for hibernate provider, for other					
-			em.close();												//use getSumGroupByMounthNative()			
-		}																																//			
+		}finally{													//only for hibernate provider, where MONTH() 					
+			em.close();												//function is supported for other use 			
+		}															//getSumGroupByMounthNative()																
 		Map<String,Long> map = new TreeMap<String,Long>();
 			for(Object obj: list){
 				Object[] objArr=(Object[]) obj;

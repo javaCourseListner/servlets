@@ -22,19 +22,22 @@ public class UserDao implements Dao{
 		return user;
 	}
 		
+	
 	public void setUser(User user){		
 		EntityManager em = factory.createEntityManager();
+		EntityTransaction et = em.getTransaction();
 		try{	
-			em.getTransaction().begin();
+			et.begin();
 			em.persist(user);
-			em.getTransaction().commit();
+			et.commit();
 		}catch(Exception e){
-			em.getTransaction().rollback();
+			et.rollback();
 		}finally{
 			em.close();
 		}
 	}
 
+	
 	public void deleteUser(String login){		
 		EntityManager em = factory.createEntityManager();
 		EntityTransaction et = em.getTransaction();
@@ -55,6 +58,7 @@ public class UserDao implements Dao{
 		}		
 	}
 	
+	
 	public List<User> getUsers(){		
 		EntityManager em = factory.createEntityManager();
 		TypedQuery<User> query = em.createQuery("SELECT u FROM User u",User.class);
@@ -67,61 +71,70 @@ public class UserDao implements Dao{
 		return listItem;
 	}
 
+	
 	public void setValidTrue(String login){		
 		EntityManager em = factory.createEntityManager();
+		EntityTransaction et = em.getTransaction();
 		try{
-			em.getTransaction().begin();
+			et.begin();
 		    User user = em.getReference(User.class, login);
 			user.setValid(true);
-			em.getTransaction().commit();
+			et.commit();
 		}catch(Exception e){
-			em.getTransaction().rollback();
+			et.rollback();
 		}finally{
 			em.close();
 		}	
 	}
+	
 	
 	public void setValidFalse(String login){		
 		EntityManager em = factory.createEntityManager();
+		EntityTransaction et = em.getTransaction();
 		try{
-			em.getTransaction().begin();
+			et.begin();
 		    User user = em.getReference(User.class, login);
 			user.setValid(false);
-			em.getTransaction().commit();
+			et.commit();
 		}catch(Exception e){
-			em.getTransaction().rollback();
+			et.rollback();
 		}finally{
 			em.close();
 		}	
 	}
+	
 	
 	public void setAdminRights(String login){		
 		EntityManager em = factory.createEntityManager();
+		EntityTransaction et = em.getTransaction();
 		try{
-			em.getTransaction().begin();
+			et.begin();
 		    User user = em.getReference(User.class, login);
 			user.setAdminRights(true);
-			em.getTransaction().commit();
+			et.commit();
 		}catch(Exception e){
-			em.getTransaction().rollback();
+			et.rollback();
 		}finally{
 			em.close();
 		}	
 	}
 	
+	
 	public void removeAdminRights(String login){		
 		EntityManager em = factory.createEntityManager();
+		EntityTransaction et = em.getTransaction();
 		try{
-			em.getTransaction().begin();
+			et.begin();
 		    User user = em.getReference(User.class, login);
 			user.setAdminRights(false);
-			em.getTransaction().commit();
+			et.commit();
 		}catch(Exception e){
-			em.getTransaction().rollback();
+			et.rollback();
 		}finally{
 			em.close();
 		}	
 	}
+	
 	
 	public List<User> getInvalidUsers(){		
 		EntityManager em = factory.createEntityManager();
@@ -136,6 +149,7 @@ public class UserDao implements Dao{
 		}																																//
 		return listItem;
 	}
+	
 	
 	public List<User> getAdminUsers(){		
 		EntityManager em = factory.createEntityManager();

@@ -21,17 +21,19 @@
 	       <br><b>Date:      </b> <fmt:formatDate type="date" value="${order.date}" />	         
 	       <br>     
         </c:forEach>      
+        
         <br>          
-         <form action = "personalPage" method="POST" >
+        <form action = "personalPage" method="POST" >
         <b> To count amount:</b> <button name="showOrdersSum" type="submit">count</button></form>                
         ${sum}                 
 	    	   
-	   <br>
+	    <br>
 	    <form action = "personalPage" method="POST" >
 	    <b> Group by month:</b> <button name="showMonthSum" type="submit">count</button></form>                
+       
         <c:forEach var="entry" items="${monthSum}">
-		 <c:out value="${entry.key}"/>:
-		 <c:out value="${entry.value}"/>
+			<c:out value="${entry.key}"/>:
+			<c:out value="${entry.value}"/>
 		</c:forEach>	
 	</body>
 </html>
