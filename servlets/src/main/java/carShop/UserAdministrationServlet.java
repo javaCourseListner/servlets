@@ -69,8 +69,7 @@ public class UserAdministrationServlet extends HttpServlet {
 
 	
 	private void getUserOrders(HttpServletRequest req,
-			HttpServletResponse resp, String parm) throws ServletException,
-			IOException {
+			HttpServletResponse resp, String parm) throws ServletException, IOException {
 		User user = userDao.getUserById(parm);
 		req.setAttribute("targetUser", user);	
 		List<UserOrder> list = user.getUserOrder();	
