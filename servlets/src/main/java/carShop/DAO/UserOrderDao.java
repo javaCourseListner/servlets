@@ -65,7 +65,7 @@ public class UserOrderDao implements Dao{
 	public List<UserOrder> getUserOrders(String login){		
 		EntityManager em = factory.createEntityManager();
 		TypedQuery<UserOrder> query = em.createQuery( 
-			          "SELECT u FROM UserOrder u "
+			                  "SELECT u FROM UserOrder u "
 					+ "WHERE u.user.login=:login",UserOrder.class);						
 		query.setParameter("login",login);
 		List<UserOrder> list=null;
@@ -81,7 +81,7 @@ public class UserOrderDao implements Dao{
 	public Long getOrdersAmount(String login){		
 		EntityManager em = factory.createEntityManager();
 		TypedQuery<Long> query = em.createQuery(
-		               "SELECT SUM(c.price) FROM Car c, UserOrder u "
+		               		   "SELECT SUM(c.price) FROM Car c, UserOrder u "
 					 + "WHERE c.carId=u.car.carId "
 					 + "AND u.user.login=:login", Long.class);						
 		query.setParameter("login",login);
@@ -98,7 +98,7 @@ public class UserOrderDao implements Dao{
 	public Map<String,Long> getSumGroupByMounth(String login){		
 		EntityManager em = factory.createEntityManager();
 		Query query = em.createQuery(
-		               "SELECT month(u.date), sum(c.price) FROM Car c, UserOrder u "
+		               	       "SELECT month(u.date), sum(c.price) FROM Car c, UserOrder u "
 		  		     + "WHERE c.carId=u.car.carId AND u.user.login=:login "		  		     
 				     + "GROUP BY month(u.date)");					
 		query.setParameter("login", login);									
@@ -128,7 +128,7 @@ public class UserOrderDao implements Dao{
 		try {
 			et.begin();
 			Query query = em.createQuery( 
-			                "DELETE FROM UserOrder u "
+			        		    "DELETE FROM UserOrder u "
 						  + "WHERE u.user.login=:login");						
 			query.setParameter("login",login);
 			query.executeUpdate();
