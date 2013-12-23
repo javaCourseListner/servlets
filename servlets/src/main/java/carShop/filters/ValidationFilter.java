@@ -29,7 +29,7 @@ public class ValidationFilter implements Filter{
 	        
 	    User user = (User) session.getAttribute("user");
 		if (!isValid(user)){      	
-		    response.sendRedirect("/servlets/welcomePage");
+			response.sendRedirect("/servlets/welcomePage");
 			return;    
 		}
 	    chain.doFilter(req, res);        
