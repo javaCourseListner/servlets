@@ -153,7 +153,7 @@ public class CarAdministrationServlet extends HttpServlet{
 
 	private boolean priceValidate(String price) {
 		if(price == null)return false;
-		Pattern p = Pattern.compile("[0-9]*"); 
+		Pattern p = Pattern.compile("[0-9]+"); 
 	        Matcher m = p.matcher(price); 
 	        return m.matches();
 	}
@@ -161,7 +161,7 @@ public class CarAdministrationServlet extends HttpServlet{
 	private void orderRegistration(HttpServletRequest req, HttpServletResponse resp, String model) 
 				throws ServletException, IOException{			 																														
 		String strPrice = req.getParameter("price");
-		if((model != null)||(!priceValidate(strPrice))){											
+		if((model != null)&&(priceValidate(strPrice))){											
 			String color = req.getParameter("color");													
 			Options opt = getOptionsFromRequest(req);;									
 			String desc = req.getParameter("description");	
