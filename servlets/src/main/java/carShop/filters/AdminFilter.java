@@ -29,22 +29,22 @@ public class AdminFilter implements Filter{
 	        }
 	        
 	        User user = (User) session.getAttribute("user");
-		    if (!isAdmin(user)){      	
-		    	response.sendRedirect("/servlets/welcomePage");
-			    return;    
-		     }
+		if (!isAdmin(user)){      	
+		    response.sendRedirect("/servlets/welcomePage");
+		    return;    
+		}
  
 	        chain.doFilter(req, res);        
-	    }
+	   }
 	  
-	  
-		private boolean isAdmin(User user) {
-			return ((user != null)&&(user.isAdminRights()== true));					
-		}
+	   
+ 	   private boolean isAdmin(User user) {
+	 	 return ((user != null)&&(user.isAdminRights()== true));					
+	   }
 	  	 
 		
-		public void init(FilterConfig filterConfig) throws ServletException {/*NOP*/}
+	   public void init(FilterConfig filterConfig) throws ServletException {/*NOP*/}
 	
 		
-		public void destroy() {/*NOP*/}
+  	  public void destroy() {/*NOP*/}
 }
