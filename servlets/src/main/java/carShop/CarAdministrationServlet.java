@@ -71,8 +71,7 @@ public class CarAdministrationServlet extends HttpServlet{
 
 
 	private void countCarOrders(HttpServletRequest req,
-			HttpServletResponse resp, String parm) throws ServletException,
-			IOException {
+			HttpServletResponse resp, String parm) throws ServletException, IOException {
 		int id = Integer.parseInt(parm);		
 		Car car = carDao.getCarById(id);
 		req.setAttribute("car",car);
@@ -89,7 +88,6 @@ public class CarAdministrationServlet extends HttpServlet{
 			Car car = carDao.getCarById(carId);
 			req.setAttribute("car",car);
 			req.getRequestDispatcher("jsp/admin/car.jsp").forward(req, resp);
-
 		}else{
 			int newPrice = Integer.parseInt(parm);					
 			carDao.setNewPrice(carId, newPrice);
@@ -101,8 +99,7 @@ public class CarAdministrationServlet extends HttpServlet{
 
 
 	private void updateDescription(HttpServletRequest req,
-			HttpServletResponse resp, String parm) throws ServletException,
-			IOException {
+			HttpServletResponse resp, String parm) throws ServletException,IOException {
 		int carId = Integer.parseInt(req.getParameter("car"));								
 		carDao.setNewDescription(carId, parm);
 		Car car = carDao.getCarById(carId);
@@ -157,8 +154,8 @@ public class CarAdministrationServlet extends HttpServlet{
 	private boolean priceValidate(String price) {
 		if(price == null)return false;
 		Pattern p = Pattern.compile("[0-9]*"); 
-        Matcher m = p.matcher(price); 
-        return m.matches();
+	        Matcher m = p.matcher(price); 
+	        return m.matches();
 	}
 		
 	private void orderRegistration(HttpServletRequest req, HttpServletResponse resp, String model) 
