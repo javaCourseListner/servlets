@@ -38,7 +38,7 @@ public class AdminFilter implements Filter{
 	 }
 	  
 	   
- 	  private boolean isAdmin(User user) {
+ 	private boolean isAdmin(User user) {
 	 	return ((user != null)&&(user.isAdminRights()== true));					
 	 }
 	  	 
@@ -46,5 +46,5 @@ public class AdminFilter implements Filter{
 	 public void init(FilterConfig filterConfig) throws ServletException {/*NOP*/}
 	
 		
-	public void destroy() {/*NOP*/}
+	 public void destroy() {/*NOP*/}
 }
